@@ -1,1 +1,125 @@
-<p>mesure-form works!</p>
+<div class="page-wrapper">
+  <div class="form-container">
+    <!-- Header -->
+    <div class="form-header">
+      <div class="header-content">
+        <div class="header-icon">
+          <i class="bi bi-hammer" *ngIf="!isEditMode"></i>
+          <i class="bi bi-pencil-square" *ngIf="isEditMode"></i>
+        </div>
+        <div class="header-text">
+          <h2 class="form-title">{{ isEditMode ? 'Modifier la mesure' : 'Nouvelle mesure tribunal' }}</h2>
+          <p class="form-subtitle">{{ isEditMode ? 'Modifiez les informations de la mesure' : 'Sélectionnez un dossier et définissez la mesure' }}</p>
+        </div>
+      </div>
+      <button type="button" class="btn-close" (click)="cancel()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <!-- Message de succès -->
+    <div class="success-message" *ngIf="showSuccessMessage">
+      <i class="bi bi-check-circle"></i>
+      <span>{{ isEditMode ? 'Mesure modifiée avec succès !' : 'Mesure créée avec succès !' }}</span>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading-indicator">
+      <div class="spinner"></div>
+      <p>Chargement des données...</p>
+    </div>
+
+    <!-- Formulaire -->
+    <form [formGroup]="mesureForm" (ngSubmit)="onSubmit()" *ngIf="!loading" class="mesure-form">
+
+      <!-- Section unique : Informations de la mesure -->
+      <div class="form-section">
+        <div class="section-header">
+          <h3><i class="bi bi-clipboard-check"></i> Informations de la mesure</h3>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="referenceDossier" class="form-label required">
+              <i class="bi bi-folder"></i> Dossier juridique
+            </label>
+            <select
+              id="referenceDossier"
+              formControlName="referenceDossier"
+              class="form-control"
+              [class.is-invalid]="fieldErrors['referenceDossier']"
+              (blur)="onFieldBlur('referenceDossier')">
+              <option value="">-- Sélectionner un dossier --</option>
+              <option *ngFor="let dossier of dossiers" [value]="dossier.referenceDossier">
+                {{ dossier.referenceDossier }}
+              </option>
+            </select>
+            <div class="error-message" *ngIf="fieldErrors['referenceDossier']">
+              <i class="bi bi-exclamation-triangle"></i>
+              {{ fieldErrors['referenceDossier'] }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="typeMesure" class="form-label required">
+              <i class="bi bi-tag"></i> Type de mesure
+            </label>
+            <select
+              id="typeMesure"
+              formControlName="typeMesure"
+              class="form-control"
+              [class.is-invalid]="fieldErrors['typeMesure']"
+              (blur)="onFieldBlur('typeMesure')">
+              <option value="">-- Sélectionner le type --</option>
+              <option *ngFor="let type of typesMesure" [value]="type">{{ type }}</option>
+            </select>
+            <div class="error-message" *ngIf="fieldErrors['typeMesure']">
+              <i class="bi bi-exclamation-triangle"></i>
+              {{ fieldErrors['typeMesure'] }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group full-width">
+            <label for="dateMesure" class="form-label required">
+              <i class="bi bi-calendar"></i> Date de la mesure
+            </label>
+            <input
+              type="date"
+              id="dateMesure"
+              formControlName="dateMesure"
+              class="form-control"
+              [class.is-invalid]="fieldErrors['dateMesure']"
+              (blur)="onFieldBlur('dateMesure')">
+            <div class="error-message" *ngIf="fieldErrors['dateMesure']">
+              <i class="bi bi-exclamation-triangle"></i>
+              {{ fieldErrors['dateMesure'] }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" (click)="cancel()">
+          <i class="bi bi-x-circle"></i>
+          Annuler
+        </button>
+        <button type="submit"
+                class="btn-submit"
+                [disabled]="mesureForm.invalid || submitting"
+                [class.loading]="submitting">
+          <span *ngIf="!submitting">
+            <i class="bi bi-check-circle"></i>
+            {{ isEditMode ? 'Enregistrer' : 'Créer la mesure' }}
+          </span>
+          <span *ngIf="submitting">
+            <i class="bi bi-arrow-repeat spinning"></i>
+            {{ isEditMode ? 'Modification...' : 'Création...' }}
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -20,11 +20,21 @@ export class MesureTribunalService {
     return this.http.get<MesureTribunal>(`${this.apiUrl}/${id}`);
   }
 
-  createMesure(mesure: MesureTribunal): Observable<MesureTribunal> {
+  createMesure(mesure: {
+    typeMesure: any;
+    dateMesure: Date;
+    referenceDossier: any;
+    documentAssocieId: null
+  }): Observable<MesureTribunal> {
     return this.http.post<MesureTribunal>(this.apiUrl, mesure);
   }
 
-  updateMesure(id: number, mesure: MesureTribunal): Observable<MesureTribunal> {
+    updateMesure(id: number, mesure: {
+        typeMesure: any;
+        dateMesure: Date;
+        referenceDossier: any;
+        documentAssocieId: null
+    }): Observable<MesureTribunal> {
     return this.http.put<MesureTribunal>(`${this.apiUrl}/${id}`, mesure);
   }
 

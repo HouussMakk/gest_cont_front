@@ -5,23 +5,23 @@
   align-items: flex-start;
   min-height: calc(100vh - 120px);
   padding: 20px;
+
 }
 
 .mesure-list-container {
   width: 100%;
-  //max-width: 1200px;
+  max-width: 800px;
   background: white;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   overflow: hidden;
   animation: slideIn 0.4s ease-out;
+  margin-right: 100px; animation: slideIn 0.4s ease-out;
   max-width: 800px; // Limite la largeur maximale
   margin: 0 auto; // Centre horizontalement
   padding: 20px; // Espacement autour
-
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; // Aligne en haut
+  //margin-right: 100px;
+  //max-width: 800px;
 }
 
 @keyframes slideIn {
@@ -254,8 +254,8 @@
 }
 
 // Cellules spécifiques
-.id-cell {
-  .id-badge {
+.reference-cell {
+  .reference-badge {
     background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
     color: #0277bd;
     padding: 6px 12px;
@@ -266,11 +266,9 @@
 }
 
 .type-cell {
-  .type-info {
-    .type-name {
-      font-weight: 600;
-      color: #333;
-    }
+  .type-name {
+    font-weight: 600;
+    color: #333;
   }
 }
 
@@ -278,37 +276,6 @@
   .date-value {
     color: #666;
     font-weight: 500;
-  }
-}
-
-.dossier-cell {
-  .dossier-link {
-    color: #0277bd;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease;
-
-    &:hover {
-      color: #015f96;
-      text-decoration: underline;
-    }
-  }
-}
-
-.document-cell {
-  .document-id {
-    background: #e8f5e8;
-    color: #2e7d32;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 500;
-  }
-
-  .no-document {
-    color: #999;
-    font-style: italic;
-    font-size: 13px;
   }
 }
 
@@ -449,6 +416,6 @@
   }
 
   .mesures-table {
-    min-width: 800px;
+    min-width: 600px;
   }
 }

@@ -1,5 +1,6 @@
 <div class="page-wrapper">
   <div class="mesure-list-container">
+    <!-- Actions Bar -->
     <div class="actions-bar">
       <div class="header-content">
         <div class="header-icon">
@@ -7,7 +8,7 @@
         </div>
         <div class="header-text">
           <h2 class="list-title">Mesures Tribunal</h2>
-          <p class="list-subtitle">Gestion des mesures et décisions judiciaires</p>
+          <p class="list-subtitle">Gestion des mesures judiciaires</p>
         </div>
       </div>
       <div class="action-buttons">
@@ -22,32 +23,43 @@
       </div>
     </div>
 
+    <!-- Section de filtres -->
     <div class="filter-section" *ngIf="filterActive">
       <div class="filter-grid">
         <div class="form-group">
-          <label for="filterType">Type de mesure</label>
-          <input type="text" id="filterType" class="form-control"
-                 [(ngModel)]="filters.typeMesure"
-                 (ngModelChange)="applyFilters()"
-                 placeholder="Filtrer par type">
-        </div>
-        <div class="form-group">
           <label for="filterDossier">Référence dossier</label>
-          <input type="text" id="filterDossier" class="form-control"
+          <input type="text"
+                 id="filterDossier"
+                 class="form-control"
                  [(ngModel)]="filters.referenceDossier"
                  (ngModelChange)="applyFilters()"
-                 placeholder="Filtrer par dossier">
+                 placeholder="Filtrer par référence">
         </div>
         <div class="form-group">
-          <label for="filterDateDebut">Date début</label>
-          <input type="date" id="filterDateDebut" class="form-control"
-                 [(ngModel)]="filters.dateDebut"
-                 (ngModelChange)="applyFilters()">
+          <label for="filterType">Type de mesure</label>
+          <select id="filterType"
+                  class="form-control"
+                  [(ngModel)]="filters.typeMesure"
+                  (ngModelChange)="applyFilters()">
+            <option value="">Tous les types</option>
+            <option value="Saisie conservatoire">Saisie conservatoire</option>
+            <option value="Référé provision">Référé provision</option>
+            <option value="Expertise judiciaire">Expertise judiciaire</option>
+            <option value="Ordonnance de référé">Ordonnance de référé</option>
+            <option value="Jugement">Jugement</option>
+            <option value="Arrêt de la Cour">Arrêt de la Cour</option>
+            <option value="Ordonnance de mise en demeure">Ordonnance de mise en demeure</option>
+            <option value="Mesure d'instruction">Mesure d'instruction</option>
+            <option value="Assignation en justice">Assignation en justice</option>
+            <option value="Autre">Autre</option>
+          </select>
         </div>
         <div class="form-group">
-          <label for="filterDateFin">Date fin</label>
-          <input type="date" id="filterDateFin" class="form-control"
-                 [(ngModel)]="filters.dateFin"
+          <label for="filterDate">Date</label>
+          <input type="date"
+                 id="filterDate"
+                 class="form-control"
+                 [(ngModel)]="filters.dateMesure"
                  (ngModelChange)="applyFilters()">
         </div>
       </div>
@@ -71,39 +83,22 @@
       <table *ngIf="filteredMesures.length > 0" class="mesures-table">
         <thead>
         <tr>
-          <th><i class="bi bi-hash"></i> ID</th>
+          <th><i class="bi bi-folder"></i> Référence Dossier</th>
           <th><i class="bi bi-tag"></i> Type de mesure</th>
           <th><i class="bi bi-calendar"></i> Date</th>
-          <th><i class="bi bi-folder"></i> Dossier</th>
-          <th><i class="bi bi-file-text"></i> Document</th>
           <th><i class="bi bi-gear"></i> Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let mesure of filteredMesures" class="table-row">
-          <td class="id-cell">
-            <span class="id-badge">#{{ mesure.idMesure }}</span>
+          <td class="reference-cell">
+            <span class="reference-badge">{{ mesure.referenceDossier }}</span>
           </td>
           <td class="type-cell">
-            <div class="type-info">
-              <span class="type-name">{{ mesure.typeMesure }}</span>
-            </div>
+            <span class="type-name">{{ mesure.typeMesure }}</span>
           </td>
           <td class="date-cell">
             <span class="date-value">{{ formatDate(mesure.dateMesure) }}</span>
-          </td>
-          <td class="dossier-cell">
-            <a [routerLink]="['/dossiers', mesure.referenceDossier]" class="dossier-link">
-              {{ mesure.referenceDossier }}
-            </a>
-          </td>
-          <td class="document-cell">
-              <span *ngIf="mesure.documentAssocieId" class="document-id">
-                Doc #{{ mesure.documentAssocieId }}
-              </span>
-            <span *ngIf="!mesure.documentAssocieId" class="no-document">
-                Aucun document
-              </span>
           </td>
           <td class="actions-cell">
             <div class="actions">

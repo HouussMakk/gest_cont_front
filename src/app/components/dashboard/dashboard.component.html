@@ -1,1 +1,272 @@
-<p>dashboard works!</p>
+<div class="page-wrapper">
+  <div class="dashboard-container">
+
+    <!-- Header du Dashboard -->
+    <div class="dashboard-header">
+      <div class="header-content">
+        <div class="header-icon">
+          <i class="bi bi-speedometer2"></i>
+        </div>
+        <div class="header-text">
+          <h1 class="dashboard-title">Tableau de Bord</h1>
+          <p class="dashboard-subtitle">Vue d'ensemble de votre système de gestion contentieux</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-refresh" (click)="retry()" [disabled]="loading">
+          <i class="bi bi-arrow-clockwise" [class.spinning]="loading"></i>
+          Actualiser
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading-container">
+      <div class="spinner"></div>
+      <p>Chargement du tableau de bord...</p>
+    </div>
+
+    <!-- Error -->
+    <div *ngIf="error" class="alert alert-danger">
+      <i class="bi bi-exclamation-triangle"></i>
+      {{ error }}
+      <button class="btn-retry" (click)="retry()">Réessayer</button>
+    </div>
+
+    <!-- Contenu du Dashboard -->
+    <div *ngIf="!loading && !error" class="dashboard-content">
+
+      <!-- Cartes de Statistiques -->
+      <div class="stats-grid">
+        <div class="stat-card primary">
+          <div class="stat-icon">
+            <i class="bi bi-file-earmark-text"></i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">{{ stats.totalDossiers }}</div>
+            <div class="stat-label">Dossiers Juridiques</div>
+            <a routerLink="/dossiers" class="stat-link">Voir tous</a>
+          </div>
+        </div>
+
+        <div class="stat-card success">
+          <div class="stat-icon">
+            <i class="bi bi-hammer"></i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">{{ stats.totalMesures }}</div>
+            <div class="stat-label">Mesures Tribunal</div>
+            <a routerLink="/mesures" class="stat-link">Voir toutes</a>
+          </div>
+        </div>
+
+        <div class="stat-card warning">
+          <div class="stat-icon">
+            <i class="bi bi-file-arrow-up"></i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">{{ stats.totalDocuments }}</div>
+            <div class="stat-label">Documents</div>
+            <a routerLink="/documents" class="stat-link">Voir tous</a>
+          </div>
+        </div>
+
+        <div class="stat-card info">
+          <div class="stat-icon">
+            <i class="bi bi-people"></i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">{{ stats.totalAvocats }}</div>
+            <div class="stat-label">Avocats</div>
+            <a routerLink="/avocats" class="stat-link">Voir tous</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sections de Données -->
+      <div class="data-sections">
+
+        <!-- Dossiers Récents -->
+        <div class="data-section">
+          <div class="section-header">
+            <h3><i class="bi bi-file-earmark-text"></i> Dossiers Juridiques Récents</h3>
+            <a routerLink="/dossiers" class="view-all-btn">Voir tous</a>
+          </div>
+          <div class="section-content">
+            <div *ngIf="recentDossiers.length === 0" class="empty-message">
+              <i class="bi bi-inbox"></i>
+              <p>Aucun dossier disponible</p>
+              <a routerLink="/dossiers/new" class="btn-primary">Créer un dossier</a>
+            </div>
+            <div *ngIf="recentDossiers.length > 0" class="items-list">
+              <div *ngFor="let dossier of recentDossiers" class="item-card dossier">
+                <div class="item-icon">
+                  <i class="bi bi-file-earmark"></i>
+                </div>
+                <div class="item-content">
+                  <div class="item-title">{{ dossier.referenceDossier }}</div>
+                  <div class="item-subtitle">{{ dossier.natureLitige }}</div>
+                  <div class="item-meta">{{ dossier.instanceJudiciaire }}</div>
+                </div>
+                <div class="item-actions">
+                  <a [routerLink]="['/dossiers', dossier.referenceDossier]" class="btn-view">
+                    <i class="bi bi-eye"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mesures Récentes -->
+        <div class="data-section">
+          <div class="section-header">
+            <h3><i class="bi bi-hammer"></i> Mesures Tribunal Récentes</h3>
+            <a routerLink="/mesures" class="view-all-btn">Voir toutes</a>
+          </div>
+          <div class="section-content">
+            <div *ngIf="recentMesures.length === 0" class="empty-message">
+              <i class="bi bi-inbox"></i>
+              <p>Aucune mesure disponible</p>
+              <a routerLink="/mesures/new" class="btn-primary">Créer une mesure</a>
+            </div>
+            <div *ngIf="recentMesures.length > 0" class="items-list">
+              <div *ngFor="let mesure of recentMesures" class="item-card mesure">
+                <div class="item-icon">
+                  <i class="bi bi-gavel"></i>
+                </div>
+                <div class="item-content">
+                  <div class="item-title">{{ mesure.typeMesure }}</div>
+                  <div class="item-subtitle">{{ mesure.referenceDossier }}</div>
+                  <div class="item-meta">{{ formatDate(mesure.dateMesure) }}</div>
+                </div>
+                <div class="item-actions">
+                  <a [routerLink]="['/mesures', mesure.idMesure]" class="btn-view">
+                    <i class="bi bi-eye"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Documents Récents -->
+        <div class="data-section">
+          <div class="section-header">
+            <h3><i class="bi bi-file-arrow-up"></i> Documents Récents</h3>
+            <a routerLink="/documents" class="view-all-btn">Voir tous</a>
+          </div>
+          <div class="section-content">
+            <div *ngIf="recentDocuments.length === 0" class="empty-message">
+              <i class="bi bi-inbox"></i>
+              <p>Aucun document disponible</p>
+              <a routerLink="/documents/upload" class="btn-primary">Ajouter un document</a>
+            </div>
+            <div *ngIf="recentDocuments.length > 0" class="items-list">
+              <div *ngFor="let document of recentDocuments" class="item-card document">
+                <div class="item-icon">
+                  <i class="bi bi-file-earmark-pdf"></i>
+                </div>
+                <div class="item-content">
+                  <div class="item-title">{{ document.nomDocumentAssocie }}</div>
+                  <div class="item-subtitle">{{ document.description }}</div>
+                  <div class="item-meta">{{ formatDate(document.dateAjoute) }}</div>
+                </div>
+                <div class="item-actions">
+                  <a [routerLink]="['/documents', document.idDocumentAssocie]" class="btn-view">
+                    <i class="bi bi-eye"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Données de Référence -->
+        <div class="reference-data-grid">
+
+          <!-- Avocats -->
+          <div class="reference-card">
+            <div class="reference-header">
+              <h4><i class="bi bi-person-badge"></i> Avocats</h4>
+              <span class="reference-count">{{ stats.totalAvocats }}</span>
+            </div>
+            <div class="reference-preview">
+              <div *ngIf="avocats.length === 0" class="no-data">Aucun avocat</div>
+              <div *ngIf="avocats.length > 0" class="preview-list">
+                <div *ngFor="let avocat of avocats.slice(0, 3)" class="preview-item">
+                  {{ avocat.nomCabinet }}
+                </div>
+                <div *ngIf="avocats.length > 3" class="preview-more">
+                  et {{ avocats.length - 3 }} autres...
+                </div>
+              </div>
+            </div>
+            <a routerLink="/avocats" class="reference-link">Gérer les avocats</a>
+          </div>
+
+          <!-- Parties Adverses -->
+          <div class="reference-card">
+            <div class="reference-header">
+              <h4><i class="bi bi-person-x"></i> Parties Adverses</h4>
+              <span class="reference-count">{{ stats.totalPartiesAdverses }}</span>
+            </div>
+            <div class="reference-preview">
+              <div *ngIf="partiesAdverses.length === 0" class="no-data">Aucune partie adverse</div>
+              <div *ngIf="partiesAdverses.length > 0" class="preview-list">
+                <div *ngFor="let partie of partiesAdverses.slice(0, 3)" class="preview-item">
+                  {{ partie.nom }}
+                </div>
+                <div *ngIf="partiesAdverses.length > 3" class="preview-more">
+                  et {{ partiesAdverses.length - 3 }} autres...
+                </div>
+              </div>
+            </div>
+            <a routerLink="/parties-adverses" class="reference-link">Gérer les parties</a>
+          </div>
+
+          <!-- Ports -->
+          <div class="reference-card">
+            <div class="reference-header">
+              <h4><i class="bi bi-geo-alt"></i> Ports</h4>
+              <span class="reference-count">{{ stats.totalPorts }}</span>
+            </div>
+            <div class="reference-preview">
+              <div *ngIf="ports.length === 0" class="no-data">Aucun port</div>
+              <div *ngIf="ports.length > 0" class="preview-list">
+                <div *ngFor="let port of ports.slice(0, 3)" class="preview-item">
+                  {{ port.nomPort }}
+                </div>
+                <div *ngIf="ports.length > 3" class="preview-more">
+                  et {{ ports.length - 3 }} autres...
+                </div>
+              </div>
+            </div>
+            <a routerLink="/ports" class="reference-link">Gérer les ports</a>
+          </div>
+
+          <!-- Stades Litige -->
+          <div class="reference-card">
+            <div class="reference-header">
+              <h4><i class="bi bi-hourglass-split"></i> Stades Litige</h4>
+              <span class="reference-count">{{ stats.totalStadesLitige }}</span>
+            </div>
+            <div class="reference-preview">
+              <div *ngIf="stadesLitige.length === 0" class="no-data">Aucun stade</div>
+              <div *ngIf="stadesLitige.length > 0" class="preview-list">
+                <div *ngFor="let stade of stadesLitige.slice(0, 3)" class="preview-item">
+                  {{ stade.stedelitige }}
+                </div>
+                <div *ngIf="stadesLitige.length > 3" class="preview-more">
+                  et {{ stadesLitige.length - 3 }} autres...
+                </div>
+              </div>
+            </div>
+            <a routerLink="/stades-litige" class="reference-link">Gérer les stades</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

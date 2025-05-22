@@ -21,10 +21,9 @@ export class MesureListComponent implements OnInit {
   // Filtrage
   filterActive = false;
   filters = {
-    typeMesure: '',
     referenceDossier: '',
-    dateDebut: '',
-    dateFin: ''
+    typeMesure: '',
+    dateMesure: ''
   };
 
   // Pagination
@@ -40,9 +39,11 @@ export class MesureListComponent implements OnInit {
 
   loadMesures(): void {
     this.loading = true;
+    this.error = null;
+
     this.mesureService.getAllMesures().subscribe({
       next: (data) => {
-        this.mesures = data;
+        this.mesures = data || [];
         this.applyFilters();
         this.loading = false;
       },
@@ -56,31 +57,31 @@ export class MesureListComponent implements OnInit {
 
   applyFilters(): void {
     this.filteredMesures = this.mesures.filter(mesure => {
-      const matchType = !this.filters.typeMesure || mesure.typeMesure.includes(this.filters.typeMesure);
-      const matchDossier = !this.filters.referenceDossier || mesure.referenceDossier.includes(this.filters.referenceDossier);
+      const matchDossier = !this.filters.referenceDossier ||
+        mesure.referenceDossier.toLowerCase().includes(this.filters.referenceDossier.toLowerCase());
+
+      const matchType = !this.filters.typeMesure ||
+        mesure.typeMesure === this.filters.typeMesure;
 
       let matchDate = true;
-      if (this.filters.dateDebut || this.filters.dateFin) {
-        const mesureDate = new Date(mesure.dateMesure);
-        if (this.filters.dateDebut) {
-          matchDate = matchDate && mesureDate >= new Date(this.filters.dateDebut);
-        }
-        if (this.filters.dateFin) {
-          matchDate = matchDate && mesureDate <= new Date(this.filters.dateFin);
-        }
+      if (this.filters.dateMesure) {
+        const filterDate = new Date(this.filters.dateMesure).toDateString();
+        const mesureDate = new Date(mesure.dateMesure).toDateString();
+        matchDate = mesureDate === filterDate;
       }
 
-      return matchType && matchDossier && matchDate;
+      return matchDossier && matchType && matchDate;
     });
 
     this.totalPages = Math.ceil(this.filteredMesures.length / this.itemsPerPage);
-    if (this.currentPage > this.totalPages) {
+    if (this.currentPage > this.totalPages && this.totalPages > 0) {
       this.currentPage = 1;
     }
 
     // Appliquer la pagination
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    this.filteredMesures = this.filteredMesures.slice(startIndex, startIndex + this.itemsPerPage);
+    const endIndex = startIndex + this.itemsPerPage;
+    this.filteredMesures = this.filteredMesures.slice(startIndex, endIndex);
   }
 
   changePage(page: number): void {
