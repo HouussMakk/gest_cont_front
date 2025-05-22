@@ -1,1 +1,167 @@
-<p>mesure-list works!</p>
+<div class="page-wrapper">
+  <div class="mesure-list-container">
+    <div class="actions-bar">
+      <div class="header-content">
+        <div class="header-icon">
+          <i class="bi bi-hammer"></i>
+        </div>
+        <div class="header-text">
+          <h2 class="list-title">Mesures Tribunal</h2>
+          <p class="list-subtitle">Gestion des mesures et décisions judiciaires</p>
+        </div>
+      </div>
+      <div class="action-buttons">
+        <button class="btn-outline" (click)="filterActive = !filterActive">
+          <i class="bi bi-filter"></i>
+          Filtrer
+        </button>
+        <a routerLink="/mesures/new" class="btn-primary">
+          <i class="bi bi-plus-lg"></i>
+          Nouvelle Mesure
+        </a>
+      </div>
+    </div>
+
+    <div class="filter-section" *ngIf="filterActive">
+      <div class="filter-grid">
+        <div class="form-group">
+          <label for="filterType">Type de mesure</label>
+          <input type="text" id="filterType" class="form-control"
+                 [(ngModel)]="filters.typeMesure"
+                 (ngModelChange)="applyFilters()"
+                 placeholder="Filtrer par type">
+        </div>
+        <div class="form-group">
+          <label for="filterDossier">Référence dossier</label>
+          <input type="text" id="filterDossier" class="form-control"
+                 [(ngModel)]="filters.referenceDossier"
+                 (ngModelChange)="applyFilters()"
+                 placeholder="Filtrer par dossier">
+        </div>
+        <div class="form-group">
+          <label for="filterDateDebut">Date début</label>
+          <input type="date" id="filterDateDebut" class="form-control"
+                 [(ngModel)]="filters.dateDebut"
+                 (ngModelChange)="applyFilters()">
+        </div>
+        <div class="form-group">
+          <label for="filterDateFin">Date fin</label>
+          <input type="date" id="filterDateFin" class="form-control"
+                 [(ngModel)]="filters.dateFin"
+                 (ngModelChange)="applyFilters()">
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading-container">
+      <div class="spinner"></div>
+      <p>Chargement des mesures...</p>
+    </div>
+
+    <!-- Error -->
+    <div *ngIf="error" class="alert alert-danger">
+      <i class="bi bi-exclamation-triangle"></i>
+      {{ error }}
+      <button class="btn-retry" (click)="loadMesures()">Réessayer</button>
+    </div>
+
+    <!-- Table des mesures -->
+    <div *ngIf="!loading && !error" class="table-container">
+      <table *ngIf="filteredMesures.length > 0" class="mesures-table">
+        <thead>
+        <tr>
+          <th><i class="bi bi-hash"></i> ID</th>
+          <th><i class="bi bi-tag"></i> Type de mesure</th>
+          <th><i class="bi bi-calendar"></i> Date</th>
+          <th><i class="bi bi-folder"></i> Dossier</th>
+          <th><i class="bi bi-file-text"></i> Document</th>
+          <th><i class="bi bi-gear"></i> Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let mesure of filteredMesures" class="table-row">
+          <td class="id-cell">
+            <span class="id-badge">#{{ mesure.idMesure }}</span>
+          </td>
+          <td class="type-cell">
+            <div class="type-info">
+              <span class="type-name">{{ mesure.typeMesure }}</span>
+            </div>
+          </td>
+          <td class="date-cell">
+            <span class="date-value">{{ formatDate(mesure.dateMesure) }}</span>
+          </td>
+          <td class="dossier-cell">
+            <a [routerLink]="['/dossiers', mesure.referenceDossier]" class="dossier-link">
+              {{ mesure.referenceDossier }}
+            </a>
+          </td>
+          <td class="document-cell">
+              <span *ngIf="mesure.documentAssocieId" class="document-id">
+                Doc #{{ mesure.documentAssocieId }}
+              </span>
+            <span *ngIf="!mesure.documentAssocieId" class="no-document">
+                Aucun document
+              </span>
+          </td>
+          <td class="actions-cell">
+            <div class="actions">
+              <a [routerLink]="['/mesures', mesure.idMesure]"
+                 class="btn-action btn-view"
+                 title="Voir les détails">
+                <i class="bi bi-eye"></i>
+              </a>
+              <a [routerLink]="['/mesures', mesure.idMesure, 'edit']"
+                 class="btn-action btn-edit"
+                 title="Modifier">
+                <i class="bi bi-pencil"></i>
+              </a>
+              <button class="btn-action btn-delete"
+                      (click)="openDeleteDialog(mesure)"
+                      title="Supprimer">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <!-- État vide -->
+      <div *ngIf="filteredMesures.length === 0" class="empty-state">
+        <div class="empty-icon">
+          <i class="bi bi-inbox"></i>
+        </div>
+        <h3>Aucune mesure trouvée</h3>
+        <p>Aucune mesure ne correspond à vos critères de recherche.</p>
+        <a routerLink="/mesures/new" class="btn-primary">
+          <i class="bi bi-plus-lg"></i>
+          Créer la première mesure
+        </a>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination" *ngIf="totalPages > 1">
+        <button class="page-btn"
+                [disabled]="currentPage === 1"
+                (click)="changePage(currentPage - 1)">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+
+        <button *ngFor="let page of getPageNumbers()"
+                class="page-btn"
+                [class.active]="page === currentPage"
+                (click)="changePage(page)">
+          {{ page }}
+        </button>
+
+        <button class="page-btn"
+                [disabled]="currentPage === totalPages"
+                (click)="changePage(currentPage + 1)">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

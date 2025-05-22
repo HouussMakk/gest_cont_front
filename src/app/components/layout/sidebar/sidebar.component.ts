@@ -18,3 +18,9 @@ export class SidebarComponent {
     { title: 'Données de référence', icon: 'bi bi-file-earmark-fill', route: '/reference-data' }
   ];
 }
+
+
+
+
+
+

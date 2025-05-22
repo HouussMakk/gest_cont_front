@@ -1,10 +1,12 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
 import { provideRouter } from '@angular/router';
-import { routes } from './app/app.routes'; // si tu as défini un fichier de routes
+import { provideHttpClient } from '@angular/common/http'; // ✅ Ajouter ceci
+import { routes } from './app/app.routes';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideRouter(routes) // ✅ Fournit le routeur
+    provideRouter(routes),
+    provideHttpClient() // ✅ Ajouter ceci pour que les services fonctionnent
   ]
 });
