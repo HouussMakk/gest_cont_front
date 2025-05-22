@@ -1,0 +1,115 @@
+<div class="dossier-list-container">
+  <div class="actions-bar">
+    <h2 class="list-title">Liste des Dossiers Juridiques</h2>
+    <div class="action-buttons">
+      <button class="btn-outline" (click)="filterActive = !filterActive">
+        <i class="material-icons btn-icon">filter_list</i>
+        Filtrer
+      </button>
+      <a routerLink="/dossiers/new" class="btn-primary">
+        <i class="material-icons btn-icon">add</i>
+        Nouveau Dossier
+      </a>
+    </div>
+  </div>
+
+  <div class="filter-bar" *ngIf="filterActive">
+    <div class="form-group">
+      <label for="filterReference">Référence</label>
+      <input type="text" id="filterReference" class="form-control" [(ngModel)]="filters.reference">
+    </div>
+    <div class="form-group">
+      <label for="filterNature">Nature du Litige</label>
+      <select id="filterNature" class="form-control" [(ngModel)]="filters.natureLitige">
+        <option value="">Tous</option>
+        <option value="Commercial">Commercial</option>
+        <option value="Maritime">Maritime</option>
+        <option value="Administratif">Administratif</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="filterInstance">Instance Judiciaire</label>
+      <select id="filterInstance" class="form-control" [(ngModel)]="filters.instanceJudiciaire">
+        <option value="">Toutes</option>
+        <option value="Tribunal de Commerce">Tribunal de Commerce</option>
+        <option value="Tribunal Maritime">Tribunal Maritime</option>
+        <option value="Tribunal Administratif">Tribunal Administratif</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="filterStade">Stade Litige</label>
+      <select id="filterStade" class="form-control" [(ngModel)]="filters.stadeLitige">
+        <option value="">Tous</option>
+        <option value="En cours">En cours</option>
+        <option value="Clos">Clos</option>
+        <option value="En attente">En attente</option>
+      </select>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="p-4 text-center">
+    <p>Chargement des dossiers...</p>
+  </div>
+
+  <div *ngIf="error" class="p-4 text-center text-danger">
+    <p>{{ error }}</p>
+    <button class="btn-primary mt-2" (click)="loadDossiers()">Réessayer</button>
+  </div>
+
+  <div *ngIf="!loading && !error">
+    <table *ngIf="filteredDossiers.length > 0">
+      <thead>
+      <tr>
+        <th>Référence</th>
+        <th>Qualité Agence</th>
+        <th>Nature du Litige</th>
+        <th>Instance Judiciaire</th>
+        <th>Stade Litige</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let dossier of filteredDossiers">
+        <td>{{ dossier.referenceDossier }}</td>
+        <td>{{ dossier.qualiteAgence }}</td>
+        <td>{{ dossier.natureLitige }}</td>
+        <td>{{ dossier.instanceJudiciaire }}</td>
+
+        <td>
+          <div class="actions">
+            <a [routerLink]="['/dossiers', dossier.referenceDossier]" class="btn-action btn-view">
+              <i class="material-icons">visibility</i>
+            </a>
+            <a [routerLink]="['/dossiers', dossier.referenceDossier, 'edit']" class="btn-action btn-edit">
+              <i class="material-icons">edit</i>
+            </a>
+            <button class="btn-action btn-delete" (click)="openDeleteDialog(dossier)">
+              <i class="material-icons">delete</i>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="filteredDossiers.length === 0" class="empty-state">
+      <p>Aucun dossier ne correspond à vos critères.</p>
+    </div>
+
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button class="page-item" [disabled]="currentPage === 1" (click)="changePage(currentPage - 1)">
+        <i class="material-icons">chevron_left</i>
+      </button>
+
+      <button *ngFor="let page of getPageNumbers()" class="page-item"
+              [class.active]="page === currentPage"
+              (click)="changePage(page)">
+        {{ page }}
+      </button>
+
+      <button class="page-item" [disabled]="currentPage === totalPages" (click)="changePage(currentPage + 1)">
+        <i class="material-icons">chevron_right</i>
+      </button>
+    </div>
+  </div>
+</div>

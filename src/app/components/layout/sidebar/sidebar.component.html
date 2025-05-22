@@ -1,0 +1,23 @@
+<div class="sidebar">
+  <br>
+  <div class="d-flex justify-content-center">
+    <img src="/assets/images/logo.png" alt="Logo" width="105" >
+    <span class="app-title"></span>
+  </div>
+
+  <div class="menu-container">
+
+    <div class="menu-header text-center">MAIN MENU</div>
+    <ul class="menu-list m-lg-2">
+      <li *ngFor="let item of menuItems"
+
+          [routerLink]="item.route"
+          routerLinkActive="active-link"
+          class="p-2 mt-2 border border-2 pointer-event">
+        <i [ngClass]="item.icon"> </i>
+        <i class="fa-solid fa-house"></i>        <span  >{{item.title}}</span>
+
+      </li>
+    </ul>
+  </div>
+</div>
