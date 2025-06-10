@@ -53,7 +53,4 @@ export class MesureTribunalService {
   getMesuresByDate(date: string): Observable<MesureTribunal[]> {
     return this.http.get<MesureTribunal[]>(`${this.apiUrl}/date/${date}`);
   }
-  // Dans mesure-tribunal.service.ts, ajoutez cette méthode si elle n'existe pas déjà :
-
-
 }
