@@ -1,0 +1,497 @@
+/* src/app/components/test-connection/test-connection.component.scss */
+.test-connection-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  background: #f8f9fa;
+  min-height: 100vh;
+}
+
+// Header Section
+.header-section {
+  background: white;
+  border-radius: 12px;
+  padding: 32px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #0277bd;
+}
+
+.title-section {
+  margin-bottom: 20px;
+
+  h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 8px 0;
+  }
+
+  .subtitle {
+    font-size: 16px;
+    color: #666;
+    margin: 0;
+  }
+}
+
+.api-info {
+  background: #f8f9fa;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+
+  .api-url {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    label {
+      font-weight: 600;
+      color: #555;
+    }
+
+    .url {
+      font-family: 'Courier New', monospace;
+      background: #ffffff;
+      padding: 8px 12px;
+      border-radius: 4px;
+      border: 1px solid #dee2e6;
+      color: #0277bd;
+      font-weight: 500;
+    }
+  }
+}
+
+// Overall Status
+.overall-status {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+
+  &.status-success {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    border-left: 4px solid #28a745;
+  }
+
+  &.status-error {
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    border-left: 4px solid #dc3545;
+  }
+
+  &.status-partial {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+    border-left: 4px solid #ffc107;
+  }
+
+  &.status-testing {
+    background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+    border-left: 4px solid #17a2b8;
+  }
+}
+
+.status-icon {
+  i {
+    font-size: 48px;
+
+    &.spinning {
+      animation: spin 2s linear infinite;
+    }
+  }
+}
+
+.status-content {
+  flex: 1;
+
+  h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: #333;
+  }
+
+  p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+  }
+}
+
+.actions {
+  .btn-test-all {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: #0277bd;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover:not(:disabled) {
+      background: #01579b;
+    }
+
+    &:disabled {
+      background: #6c757d;
+      cursor: not-allowed;
+    }
+
+    i {
+      font-size: 20px;
+    }
+  }
+}
+
+// Test Results
+.test-results {
+  background: white;
+  border-radius: 12px;
+  padding: 32px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 24px 0;
+    color: #333;
+  }
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 20px;
+}
+
+.test-card {
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  &.status-success {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    border-left: 4px solid #28a745;
+  }
+
+  &.status-error {
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    border-left: 4px solid #dc3545;
+  }
+
+  &.status-testing {
+    background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+    border-left: 4px solid #17a2b8;
+  }
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+
+  .service-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .status-icon {
+      font-size: 24px;
+
+      &.spinning {
+        animation: spin 2s linear infinite;
+      }
+    }
+
+    h4 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0;
+      color: #333;
+    }
+  }
+
+  .btn-test-individual {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 1);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    i {
+      font-size: 18px;
+    }
+  }
+}
+
+.card-content {
+  .status-message {
+    font-size: 14px;
+    margin: 0 0 12px 0;
+    color: #555;
+  }
+
+  .metrics {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+
+    .response-time {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: #666;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 4px 8px;
+      border-radius: 4px;
+
+      i {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.sample-data {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+
+  h5 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: #555;
+  }
+
+  .data-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .data-item {
+      font-size: 12px;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+    }
+  }
+}
+
+// Technical Details
+.technical-details {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+    color: #333;
+  }
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+
+  label {
+    font-weight: 600;
+    color: #555;
+  }
+
+  span {
+    font-weight: 500;
+
+    &.success-count {
+      color: #28a745;
+    }
+
+    &.error-count {
+      color: #dc3545;
+    }
+  }
+}
+
+// Help Section
+.help-section {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+    color: #333;
+  }
+}
+
+.help-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.help-item {
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  background: #f8f9fa;
+
+  h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: #333;
+  }
+
+  p {
+    font-size: 14px;
+    margin: 0;
+    color: #666;
+    line-height: 1.5;
+  }
+}
+
+// Animations
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Status classes
+.status-success {
+  .status-icon i {
+    color: #28a745;
+  }
+}
+
+.status-error {
+  .status-icon i {
+    color: #dc3545;
+  }
+}
+
+.status-testing {
+  .status-icon i {
+    color: #17a2b8;
+  }
+}
+
+.status-unknown {
+  .status-icon i {
+    color: #6c757d;
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .test-connection-container {
+    padding: 16px;
+  }
+
+  .header-section {
+    padding: 20px;
+  }
+
+  .title-section h1 {
+    font-size: 24px;
+  }
+
+  .overall-status {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+
+  .results-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .help-content {
+    grid-template-columns: 1fr;
+  }
+
+  .api-url {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 8px !important;
+
+    .url {
+      word-break: break-all;
+    }
+  }
+}
+
+// Print styles
+@media print {
+  .test-connection-container {
+    background: white;
+    box-shadow: none;
+  }
+
+  .test-card,
+  .overall-status,
+  .header-section,
+  .technical-details,
+  .help-section {
+    box-shadow: none;
+    border: 1px solid #dee2e6;
+  }
+
+  .btn-test-all,
+  .btn-test-individual {
+    display: none;
+  }
+}

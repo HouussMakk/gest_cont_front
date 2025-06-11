@@ -9,27 +9,28 @@ import { DocumentAssocie } from '../models/document-associe.model';
 })
 export class DocumentAssocieService {
   private apiUrl = `${environment.apiUrl}/documents`;
+  headers = { 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUB1c2VyLmNvbSIsImlhdCI6MTc0OTU4NDQyMiwiZXhwIjoxNzUwMTg5MjIyfQ.ispHZeXR3ELcray52Km_-NkHntz2VDDvpsDUQdS5fiQ' }
 
   constructor(private http: HttpClient) { }
 
   getAllDocuments(): Observable<DocumentAssocie[]> {
-    return this.http.get<DocumentAssocie[]>(this.apiUrl);
+    return this.http.get<DocumentAssocie[]>(this.apiUrl,{headers:this.headers});
   }
 
   getDocumentById(id: number): Observable<DocumentAssocie> {
-    return this.http.get<DocumentAssocie>(`${this.apiUrl}/${id}`);
+    return this.http.get<DocumentAssocie>(`${this.apiUrl}/${id}`,{headers:this.headers});
   }
 
   createDocument(document: DocumentAssocie): Observable<DocumentAssocie> {
-    return this.http.post<DocumentAssocie>(this.apiUrl, document);
+    return this.http.post<DocumentAssocie>(this.apiUrl, document,{headers:this.headers});
   }
 
   updateDocument(id: number, document: DocumentAssocie): Observable<DocumentAssocie> {
-    return this.http.put<DocumentAssocie>(`${this.apiUrl}/${id}`, document);
+    return this.http.put<DocumentAssocie>(`${this.apiUrl}/${id}`, document,{headers:this.headers});
   }
 
   deleteDocument(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`,{headers:this.headers});
   }
 
   uploadDocument(file: File, nomDocument: string, description: string, idMesure?: number): Observable<DocumentAssocie> {
@@ -37,19 +38,19 @@ export class DocumentAssocieService {
     formData.append('file', file);
     formData.append('nomDocument', nomDocument);
     formData.append('description', description);
-    
+
     if (idMesure) {
       formData.append('idMesure', idMesure.toString());
     }
-    
-    return this.http.post<DocumentAssocie>(`${this.apiUrl}/upload`, formData);
+
+    return this.http.post<DocumentAssocie>(`${this.apiUrl}/upload`, formData,{headers:this.headers});
   }
 
   getDocumentsByDossier(referenceDossier: string): Observable<DocumentAssocie[]> {
-    return this.http.get<DocumentAssocie[]>(`${this.apiUrl}/dossier/${referenceDossier}`);
+    return this.http.get<DocumentAssocie[]>(`${this.apiUrl}/dossier/${referenceDossier}`,{headers:this.headers});
   }
 
   downloadDocument(id: number): Observable<Blob> {
-    return this.http.get(`${this.apiUrl}/download/${id}`, { responseType: 'blob' });
+    return this.http.get(`${this.apiUrl}/download/${id}`, { responseType: 'blob',headers:this.headers });
   }
 }
