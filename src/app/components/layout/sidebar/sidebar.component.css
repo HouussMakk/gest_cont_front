@@ -55,7 +55,6 @@
 }
 
 .menu-item:hover {
-  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .menu-item.active-link {
@@ -113,7 +112,6 @@
 }
 
 .submenu-item:hover {
-  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .submenu-item.active-link {

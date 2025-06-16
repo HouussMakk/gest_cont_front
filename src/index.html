@@ -11,6 +11,15 @@
 </head>
 <body class="mat-typography">
   <app-root></app-root>
-
+<script>
+  /* global bootstrap: false */
+  (() => {
+    'use strict'
+    const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    tooltipTriggerList.forEach(tooltipTriggerEl => {
+      new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+  })()
+</script>
 </body>
 </html>
