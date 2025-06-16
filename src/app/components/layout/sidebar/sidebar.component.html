@@ -1,22 +1,42 @@
 <div class="sidebar">
   <br>
   <div class="d-flex justify-content-center">
-    <img src="/assets/images/logo.png" alt="Logo" width="105" >
+    <img src="/assets/images/logo.png" alt="Logo" width="105">
     <span class="app-title"></span>
   </div>
-
   <div class="menu-container">
-
     <div class="menu-header text-center">MAIN MENU</div>
     <ul class="menu-list m-lg-2">
-      <li *ngFor="let item of menuItems"
+      <li *ngFor="let item of menuItems" class="menu-item-wrapper">
+        <!-- Parent menu item -->
+        <div class="menu-item p-2 mt-2 border border-2 pointer-event"
+             [class.has-submenu]="hasSubmenu(item)"
+             [class.expanded]="item.expanded"
+             [routerLink]="!hasSubmenu(item) ? item.route : null"
+             routerLinkActive="active-link"
+             [routerLinkActiveOptions]="{ exact: true }"
+             (click)="hasSubmenu(item) ? toggleSubmenu(item) : null">
+          <div class="menu-item-content">
+            <i [ngClass]="item.icon"></i>
+            <span>{{ item.title }}</span>
+            <i *ngIf="hasSubmenu(item)"
+               class="bi bi-chevron-down expand-icon"
+               [class.rotated]="item.expanded"></i>
+          </div>
+        </div>
 
-          [routerLink]="item.route"
-          routerLinkActive="active-link"
-          class="p-2 mt-2 border border-2 pointer-event">
-        <i [ngClass]="item.icon"> </i>
-        <i class="fa-solid fa-house"></i>        <span  >{{item.title}}</span>
-
+        <!-- Submenu -->
+        <ul *ngIf="hasSubmenu(item)"
+            class="submenu"
+            [class.expanded]="item.expanded">
+          <li *ngFor="let subItem of item.submenu"
+              class="submenu-item p-2 mt-1 pointer-event"
+              [routerLink]="subItem.route"
+              routerLinkActive="active-link">
+            <i [ngClass]="subItem.icon"></i>
+            <span>{{ subItem.title }}</span>
+          </li>
+        </ul>
       </li>
     </ul>
   </div>

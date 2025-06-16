@@ -1,1 +1,69 @@
-<p>avocat-list works!</p>
+<div class="avocat-list-container">
+  <div class="actions-bar">
+    <h2>Liste des Avocats</h2>
+    <div class="action-buttons">
+      <button class="btn-search">
+        <i class="material-icons">search</i>
+        <span>Rechercher</span>
+      </button>
+      <button class="btn-add" (click)="navigateToNew()">
+        <i class="material-icons">add</i>
+        <span>Nouvel Avocat</span>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading-indicator">
+    <p>Chargement des avocats...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+    <button (click)="loadAvocats()">Réessayer</button>
+  </div>
+
+  <div *ngIf="!loading && !error" class="avocat-table-container">
+    <table class="avocat-table">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom du Cabinet</th>
+        <th>Contact</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let avocat of avocats">
+        <td>{{ avocat.idAvocat }}</td>
+        <td>{{ avocat.nomCabinet }}</td>
+        <td>{{ avocat.contact }}</td>
+        <td class="actions-column">
+          <button class="action-icon view" (click)="navigateToDetail(avocat.idAvocat)">
+            <i class="material-icons">visibility</i>
+          </button>
+          <button class="action-icon edit" (click)="navigateToEdit(avocat.idAvocat)">
+            <i class="material-icons">edit</i>
+          </button>
+          <button class="action-icon delete" (click)="deleteAvocat(avocat.idAvocat)">
+            <i class="material-icons">delete</i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="avocats.length === 0" class="no-data">
+      <p>Aucun avocat disponible</p>
+    </div>
+
+    <div class="pagination">
+      <button class="pagination-btn" disabled>
+        <i class="material-icons">chevron_left</i>
+      </button>
+      <span class="page-indicator">Page 1 sur 1</span>
+      <button class="pagination-btn" disabled>
+        <i class="material-icons">chevron_right</i>
+      </button>
+    </div>
+  </div>
+</div>
