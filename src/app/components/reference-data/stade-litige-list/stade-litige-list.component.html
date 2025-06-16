@@ -1,1 +1,69 @@
-<p>stade-litige-list works!</p>
+<div class="stade-litige-list-container">
+  <div class="actions-bar">
+    <h2>Liste des Stades Litige</h2>
+    <div class="action-buttons">
+      <button class="btn-search">
+        <i class="material-icons">search</i>
+        <span>Rechercher</span>
+      </button>
+      <button class="btn-add" (click)="navigateToNew()">
+        <i class="material-icons">add</i>
+        <span>Nouveau Stade Litige</span>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading-indicator">
+    <p>Chargement des stades litige...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+    <button (click)="loadStadesLitige()">Réessayer</button>
+  </div>
+
+  <div *ngIf="!loading && !error" class="stade-litige-table-container">
+    <table class="stade-litige-table">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Stade Litige</th>
+        <th>Date Changement Statut</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let stadeLitige of stadesLitige">
+        <td>{{ stadeLitige.idstadelitige }}</td>
+        <td>{{ stadeLitige.stedelitige }}</td>
+        <td>{{ formatDate(stadeLitige.datChangementStatut) }}</td>
+        <td class="actions-column">
+          <button class="action-icon view" (click)="navigateToDetail(stadeLitige.idstadelitige)">
+            <i class="material-icons">visibility</i>
+          </button>
+          <button class="action-icon edit" (click)="navigateToEdit(stadeLitige.idstadelitige)">
+            <i class="material-icons">edit</i>
+          </button>
+          <button class="action-icon delete" (click)="deleteStadeLitige(stadeLitige.idstadelitige)">
+            <i class="material-icons">delete</i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="stadesLitige.length === 0" class="no-data">
+      <p>Aucun stade litige disponible</p>
+    </div>
+
+    <div class="pagination">
+      <button class="pagination-btn" disabled>
+        <i class="material-icons">chevron_left</i>
+      </button>
+      <span class="page-indicator">Page 1 sur 1</span>
+      <button class="pagination-btn" disabled>
+        <i class="material-icons">chevron_right</i>
+      </button>
+    </div>
+  </div>
+</div>

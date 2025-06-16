@@ -1,1 +1,71 @@
-<p>partie-adverse-list works!</p>
+<div class="partie-adverse-list-container">
+  <div class="actions-bar">
+    <h2>Liste des Parties Adverses</h2>
+    <div class="action-buttons">
+      <button class="btn-search">
+        <i class="material-icons">search</i>
+        <span>Rechercher</span>
+      </button>
+      <button class="btn-add" (click)="navigateToNew()">
+        <i class="material-icons">add</i>
+        <span>Nouvelle Partie Adverse</span>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading-indicator">
+    <p>Chargement des parties adverses...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+    <button (click)="loadPartiesAdverses()">Réessayer</button>
+  </div>
+
+  <div *ngIf="!loading && !error" class="partie-adverse-table-container">
+    <table class="partie-adverse-table">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Adresse</th>
+        <th>Contact</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let partieAdverse of partiesAdverses">
+        <td>{{ partieAdverse.idPartieadverse }}</td>
+        <td>{{ partieAdverse.nom }}</td>
+        <td>{{ partieAdverse.adresee }}</td>
+        <td>{{ partieAdverse.contact }}</td>
+        <td class="actions-column">
+          <button class="action-icon view" (click)="navigateToDetail(partieAdverse.idPartieadverse!)">
+            <i class="material-icons">visibility</i>
+          </button>
+          <button class="action-icon edit" (click)="navigateToEdit(partieAdverse.idPartieadverse!)">
+            <i class="material-icons">edit</i>
+          </button>
+          <button class="action-icon delete" (click)="deletePartieAdverse(partieAdverse.idPartieadverse!)">
+            <i class="material-icons">delete</i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="partiesAdverses.length === 0" class="no-data">
+      <p>Aucune partie adverse disponible</p>
+    </div>
+
+    <div class="pagination">
+      <button class="pagination-btn" disabled>
+        <i class="material-icons">chevron_left</i>
+      </button>
+      <span class="page-indicator">Page 1 sur 1</span>
+      <button class="pagination-btn" disabled>
+        <i class="material-icons">chevron_right</i>
+      </button>
+    </div>
+  </div>
+</div>

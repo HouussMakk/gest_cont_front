@@ -1,1 +1,67 @@
-<p>port-list works!</p>
+<div class="port-list-container">
+  <div class="actions-bar">
+    <h2>Liste des Ports</h2>
+    <div class="action-buttons">
+      <button class="btn-search">
+        <i class="material-icons">search</i>
+        <span>Rechercher</span>
+      </button>
+      <button class="btn-add" (click)="navigateToNew()">
+        <i class="material-icons">add</i>
+        <span>Nouveau Port</span>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading-indicator">
+    <p>Chargement des ports...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+    <button (click)="loadPorts()">Réessayer</button>
+  </div>
+
+  <div *ngIf="!loading && !error" class="port-table-container">
+    <table class="port-table">
+      <thead>
+      <tr>
+        <th>Code Port</th>
+        <th>Nom du Port</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let port of ports">
+        <td>{{ port.codePort }}</td>
+        <td>{{ port.nomPort }}</td>
+        <td class="actions-column">
+          <button class="action-icon view" (click)="navigateToDetail(port.codePort)">
+            <i class="material-icons">visibility</i>
+          </button>
+          <button class="action-icon edit" (click)="navigateToEdit(port.codePort)">
+            <i class="material-icons">edit</i>
+          </button>
+          <button class="action-icon delete" (click)="deletePort(port.codePort)">
+            <i class="material-icons">delete</i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="ports.length === 0" class="no-data">
+      <p>Aucun port disponible</p>
+    </div>
+
+    <div class="pagination">
+      <button class="pagination-btn" disabled>
+        <i class="material-icons">chevron_left</i>
+      </button>
+      <span class="page-indicator">Page 1 sur 1</span>
+      <button class="pagination-btn" disabled>
+        <i class="material-icons">chevron_right</i>
+      </button>
+    </div>
+  </div>
+</div>

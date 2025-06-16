@@ -22,7 +22,7 @@ export class PartieAdverseService {
     return this.http.get<PartieAdverse[]>(this.apiUrl, this.options);
   }
 
-  getPartieAdverseById(id: string): Observable<PartieAdverse> {
+  getPartieAdverseById(id: number): Observable<PartieAdverse> {
     return this.http.get<PartieAdverse>(`${this.apiUrl}/${id}`, this.options);
   }
 
@@ -30,11 +30,11 @@ export class PartieAdverseService {
     return this.http.post<PartieAdverse>(this.apiUrl, partieAdverse, this.options);
   }
 
-  updatePartieAdverse(id: string, partieAdverse: PartieAdverse): Observable<PartieAdverse> {
+  updatePartieAdverse(id: number, partieAdverse: PartieAdverse): Observable<PartieAdverse> {
     return this.http.put<PartieAdverse>(`${this.apiUrl}/${id}`, partieAdverse, this.options);
   }
 
-  deletePartieAdverse(id: string): Observable<void> {
+    deletePartieAdverse(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`, this.options);
   }
 }
