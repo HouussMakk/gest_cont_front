@@ -8,17 +8,17 @@
 }
 
 .dossier-list-container {
-  width: 100%;
+  //width: 100%;
   //max-width: 1400px;
   background: white;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
+  //overflow: hidden;
   animation: slideIn 0.4s ease-out;
-  max-width: 800px; // Limite la largeur maximale
+  //max-width: 800px; // Limite la largeur maximale
   margin: 0 auto; // Centre horizontalement
-  padding: 20px; // Espacement autour
-  margin-right: 100px;
+  //padding: 20px; // Espacement autour
+  //margin-right: 100px;
 
   display: flex;
   flex-direction: column;
