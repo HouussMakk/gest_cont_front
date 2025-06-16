@@ -1,42 +1,50 @@
-<div class="sidebar">
+<div class="sidebar flex-shrink-0 p-3">
   <br>
-  <div class="d-flex justify-content-center">
+  <div class="d-flex justify-content-center align-items-center pb-3 mb-3 border-bottom">
     <img src="/assets/images/logo.png" alt="Logo" width="105">
     <span class="app-title"></span>
   </div>
+
   <div class="menu-container">
-    <div class="menu-header text-center">MAIN MENU</div>
-    <ul class="menu-list m-lg-2">
-      <li *ngFor="let item of menuItems" class="menu-item-wrapper">
-        <!-- Parent menu item -->
-        <div class="menu-item p-2 mt-2 border border-2 pointer-event"
-             [class.has-submenu]="hasSubmenu(item)"
-             [class.expanded]="item.expanded"
-             [routerLink]="!hasSubmenu(item) ? item.route : null"
-             routerLinkActive="active-link"
-             [routerLinkActiveOptions]="{ exact: true }"
-             (click)="hasSubmenu(item) ? toggleSubmenu(item) : null">
-          <div class="menu-item-content">
-            <i [ngClass]="item.icon"></i>
-            <span>{{ item.title }}</span>
-            <i *ngIf="hasSubmenu(item)"
-               class="bi bi-chevron-down expand-icon"
-               [class.rotated]="item.expanded"></i>
-          </div>
+    <div class="menu-header text-center mb-3">MAIN MENU</div>
+
+    <ul class="list-unstyled ps-0">
+      <li *ngFor="let item of menuItems" class="mb-1">
+        <!-- Menu item sans sous-menu -->
+        <div *ngIf="!hasSubmenu(item)"
+             class="menu-item d-inline-flex align-items-center rounded text-decoration-none p-2 w-100"
+             [routerLink]="item.route"
+             routerLinkActive="active">
+          <i [ngClass]="item.icon" class="me-2"></i>
+          <span>{{ item.title }}</span>
         </div>
 
-        <!-- Submenu -->
-        <ul *ngIf="hasSubmenu(item)"
-            class="submenu"
-            [class.expanded]="item.expanded">
-          <li *ngFor="let subItem of item.submenu"
-              class="submenu-item p-2 mt-1 pointer-event"
-              [routerLink]="subItem.route"
-              routerLinkActive="active-link">
-            <i [ngClass]="subItem.icon"></i>
-            <span>{{ subItem.title }}</span>
-          </li>
-        </ul>
+        <!-- Menu item avec sous-menu -->
+        <div *ngIf="hasSubmenu(item)">
+          <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 p-2 w-100 text-start"
+                  [class.collapsed]="!item.expanded"
+                  (click)="toggleSubmenu(item)"
+                  [attr.aria-expanded]="item.expanded">
+            <i [ngClass]="item.icon" class="me-2"></i>
+            <span>{{ item.title }}</span>
+            <i class="bi bi-chevron-down ms-auto expand-icon"
+               [class.rotated]="item.expanded"></i>
+          </button>
+
+          <!-- Sous-menu -->
+          <div class="collapse" [class.show]="item.expanded">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-3">
+              <li *ngFor="let subItem of item.submenu">
+                <a [routerLink]="subItem.route"
+                   routerLinkActive="active"
+                   class="submenu-link d-inline-flex align-items-center text-decoration-none rounded p-2 w-100">
+                  <i [ngClass]="subItem.icon" class="me-2"></i>
+                  <span>{{ subItem.title }}</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </li>
     </ul>
   </div>
