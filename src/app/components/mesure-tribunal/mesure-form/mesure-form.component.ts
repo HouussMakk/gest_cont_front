@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { MesureTribunalService } from '../../../services/mesure-tribunal.service';
 import { DossierJuridiqueService } from '../../../services/dossier-juridique.service';
 import { MesureTribunal } from '../../../models/mesure-tribunal.model';
-import { DossierJuridique } from '../../../models/dossier-juridique.model';
+import {DossierJuridique, DossierJuridiqueListing} from '../../../models/dossier-juridique.model';
 
 @Component({
   selector: 'app-mesure-form',
@@ -26,7 +26,7 @@ export class MesureFormComponent implements OnInit {
   fieldErrors: { [key: string]: string } = {};
 
   // Données de référence
-  dossiers: DossierJuridique[] = [];
+  dossiers: DossierJuridiqueListing[] = [];
 
   // Types de mesures prédéfinis
   typesMesure = [

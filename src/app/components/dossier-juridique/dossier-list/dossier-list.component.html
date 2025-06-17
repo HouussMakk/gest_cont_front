@@ -57,33 +57,68 @@
   </div>
 
   <div *ngIf="!loading && !error">
-    <table *ngIf="filteredDossiers.length > 0">
+    <table *ngIf="filteredDossiers.length > 0" class="dossier-table">
       <thead>
       <tr>
         <th>Référence</th>
         <th>Qualité Agence</th>
         <th>Nature du Litige</th>
+        <th>Objet du Litige</th>
         <th>Instance Judiciaire</th>
+        <th>Code Port</th>
+        <th>Avocat</th>
+        <th>Partie Adverse</th>
         <th>Stade Litige</th>
         <th>Actions</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let dossier of filteredDossiers">
-        <td>{{ dossier.referenceDossier }}</td>
-        <td>{{ dossier.qualiteAgence }}</td>
-        <td>{{ dossier.natureLitige }}</td>
+        <td><span class="reference-cell">{{ dossier.referenceDossier }}</span></td>
+        <td>
+        <span class="qualite-badge"
+              [ngClass]="{'qualite-demandeur': dossier.qualiteAgence === 'Demandeur',
+                         'qualite-defendeur': dossier.qualiteAgence === 'Défendeur'}">
+          {{ dossier.qualiteAgence }}
+        </span>
+        </td>
+        <td>
+        <span class="nature-badge"
+              [ngClass]="{'nature-commercial': dossier.natureLitige === 'Commercial',
+                         'nature-maritime': dossier.natureLitige === 'Maritime',
+                         'nature-administratif': dossier.natureLitige === 'Administratif'}">
+          {{ dossier.natureLitige }}
+        </span>
+        </td>
+        <td>{{ dossier.objetLitige }}</td>
         <td>{{ dossier.instanceJudiciaire }}</td>
-
+        <td><span class="port-code">{{ dossier.codePort }}</span></td>
+        <td>
+        <span class="avocat-cell" *ngIf="dossier.avocat; else noAvocat">
+          {{ dossier.avocat }}
+        </span>
+          <ng-template #noAvocat>
+            <span class="no-avocat">Non assigné</span>
+          </ng-template>
+        </td>
+        <td>{{ dossier.partieAdverse ? dossier.partieAdverse : 'non specific' }}  </td>
+        <td>
+        <span class="stade-badge"
+              [ngClass]="{'stade-en-cours': getStadeLibelle(dossier.stadeLitigeId) === 'En cours',
+                         'stade-clos': getStadeLibelle(dossier.stadeLitigeId) === 'Clos',
+                         'stade-attente': getStadeLibelle(dossier.stadeLitigeId) === 'En attente'}">
+          {{ getStadeLibelle(dossier.stadeLitigeId) }}
+        </span>
+        </td>
         <td>
           <div class="actions">
-            <a [routerLink]="['/dossiers', dossier.referenceDossier]" class="btn-action btn-view">
+            <a [routerLink]="['/dossiers', dossier.referenceDossier]" class="btn-action btn-view" title="Voir le dossier">
               <i class="material-icons">visibility</i>
             </a>
-            <a [routerLink]="['/dossiers', dossier.referenceDossier, 'edit']" class="btn-action btn-edit">
+            <a [routerLink]="['/dossiers', dossier.referenceDossier, 'edit']" class="btn-action btn-edit" title="Modifier le dossier">
               <i class="material-icons">edit</i>
             </a>
-            <button class="btn-action btn-delete" (click)="openDeleteDialog(dossier)">
+            <button class="btn-action btn-delete" (click)="openDeleteDialog(dossier)" title="Supprimer le dossier">
               <i class="material-icons">delete</i>
             </button>
           </div>
@@ -91,7 +126,6 @@
       </tr>
       </tbody>
     </table>
-
     <div *ngIf="filteredDossiers.length === 0" class="empty-state">
       <p>Aucun dossier ne correspond à vos critères.</p>
     </div>

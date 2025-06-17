@@ -1,6 +1,6 @@
 export interface DossierJuridique {
     referenceDossier: string;
-    qualiteAgence: string;
+  qualiteAgence: string;
     natureLitige: string;
     objetLitige: string;
     instanceJudiciaire: string;
@@ -9,3 +9,14 @@ export interface DossierJuridique {
     stadeLitigeId: number;
     avocatId: number;
   }
+export interface DossierJuridiqueListing {
+  referenceDossier: string;
+  qualiteAgence: string;
+  natureLitige: string;
+  objetLitige: string;
+  instanceJudiciaire: string;
+  codePort: string;
+  partieAdverse: string;
+  stadeLitigeId: number;
+  avocat: string;
+}

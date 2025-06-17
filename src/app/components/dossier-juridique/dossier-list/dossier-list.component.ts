@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { DossierJuridiqueService } from '../../../services/dossier-juridique.service';
-import { DossierJuridique } from '../../../models/dossier-juridique.model';
+import {DossierJuridique, DossierJuridiqueListing} from '../../../models/dossier-juridique.model';
 
 @Component({
   selector: 'app-dossier-list',
@@ -13,10 +13,30 @@ import { DossierJuridique } from '../../../models/dossier-juridique.model';
   imports: [CommonModule, RouterModule, FormsModule]
 })
 export class DossierListComponent implements OnInit {
-  dossiers: DossierJuridique[] = [];
-  filteredDossiers: DossierJuridique[] = [];
+  dossiers: DossierJuridiqueListing[] = [];
+  filteredDossiers: DossierJuridiqueListing[] = [];
   loading = true;
   error: string | null = null;
+  getStadeLibelle(stadeLitigeId: number): string {
+    let result = "";
+    switch (stadeLitigeId)
+    {
+      case 1:
+        result  = "En cours"
+        break;
+      case 2:
+        result = "Clos"
+        break;
+      case 3:
+        result = "En attente"
+        break
+      default:
+        result = "NOT DEFINED";
+        break;
+    }
+
+    return result;
+  }
 
   // Filtrage
   filterActive = false;
@@ -82,7 +102,7 @@ export class DossierListComponent implements OnInit {
     return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
 
-  openDeleteDialog(dossier: DossierJuridique): void {
+  openDeleteDialog(dossier: DossierJuridiqueListing): void {
     if (confirm(`Êtes-vous sûr de vouloir supprimer le dossier ${dossier.referenceDossier} ?`)) {
       this.deleteDossier(dossier.referenceDossier);
     }

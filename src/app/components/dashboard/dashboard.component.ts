@@ -8,7 +8,7 @@ import { AvocatService } from '../../services/avocat.service';
 import { PartieAdverseService } from '../../services/partie-adverse.service';
 import { PortService } from '../../services/port.service';
 import { StadeLitigeService } from '../../services/stade-litige.service';
-import { DossierJuridique } from '../../models/dossier-juridique.model';
+import {DossierJuridique, DossierJuridiqueListing} from '../../models/dossier-juridique.model';
 import { MesureTribunal } from '../../models/mesure-tribunal.model';
 import { DocumentAssocie } from '../../models/document-associe.model';
 import { Avocat } from '../../models/avocat.model';
@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
   error: string | null = null;
 
   // Données
-  dossiers: DossierJuridique[] = [];
+  dossiers: DossierJuridiqueListing[] = [];
   mesures: MesureTribunal[] = [];
   documents: DocumentAssocie[] = [];
   avocats: Avocat[] = [];
@@ -52,7 +52,7 @@ export class DashboardComponent implements OnInit {
   };
 
   // Données récentes pour affichage
-  recentDossiers: DossierJuridique[] = [];
+  recentDossiers: DossierJuridiqueListing[] = [];
   recentMesures: MesureTribunal[] = [];
   recentDocuments: DocumentAssocie[] = [];
 

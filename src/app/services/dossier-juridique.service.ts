@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { DossierJuridique } from '../models/dossier-juridique.model';
+import {DossierJuridique, DossierJuridiqueListing} from '../models/dossier-juridique.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +13,8 @@ export class DossierJuridiqueService {
 
   constructor(private http: HttpClient) { }
 
-  getAllDossiers(): Observable<DossierJuridique[]> {
-    return this.http.get<DossierJuridique[]>(this.apiUrl,{headers:this.headers});
+  getAllDossiers(): Observable<DossierJuridiqueListing[]> {
+    return this.http.get<DossierJuridiqueListing[]>(this.apiUrl,{headers:this.headers});
   }
 
   getDossierByReference(reference: string): Observable<DossierJuridique> {
