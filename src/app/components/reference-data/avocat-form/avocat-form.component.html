@@ -1,0 +1,53 @@
+<div class="avocat-form-container">
+  <div class="form-header">
+    <h2>{{ isEditMode ? 'Modifier l\'avocat' : 'Créer un nouvel avocat' }}</h2>
+    <button class="btn-back" (click)="cancel()">
+      <i class="material-icons">arrow_back</i>
+      Retour
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-indicator">
+    <p>Chargement des données...</p>
+  </div>
+
+  <form [formGroup]="avocatForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="nomCabinet">Nom *</label>
+        <input
+          type="text"
+          id="nomCabinet"
+          formControlName="nomCabinet"
+          [class.is-invalid]="isFieldInvalid('nomCabinet')"
+          placeholder="Entrez le nom "
+        >
+        <div class="error-message" *ngIf="isFieldInvalid('nomCabinet')">
+          {{ getErrorMessage('nomCabinet') }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="contact">Contact *</label>
+        <input
+          type="text"
+          id="contact"
+          formControlName="contact"
+          [class.is-invalid]="isFieldInvalid('contact')"
+          placeholder="Entrez les informations de contact"
+        >
+        <div class="error-message" *ngIf="isFieldInvalid('contact')">
+          {{ getErrorMessage('contact') }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="cancel()">Annuler</button>
+      <button type="submit" class="btn-submit" [disabled]="submitting || avocatForm.invalid">
+        <span *ngIf="!submitting">{{ isEditMode ? 'Enregistrer les modifications' : 'Créer l\'avocat' }}</span>
+        <span *ngIf="submitting">Traitement en cours...</span>
+      </button>
+    </div>
+  </form>
+</div>

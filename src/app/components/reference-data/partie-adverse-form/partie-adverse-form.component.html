@@ -1,0 +1,67 @@
+<div class="partie-adverse-form-container">
+  <div class="form-header">
+    <h2>{{ isEditMode ? 'Modifier la partie adverse' : 'Créer une nouvelle partie adverse' }}</h2>
+    <button class="btn-back" (click)="cancel()">
+      <i class="material-icons">arrow_back</i>
+      Retour
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-indicator">
+    <p>Chargement des données...</p>
+  </div>
+
+  <form [formGroup]="partieAdverseForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="nom">Nom *</label>
+        <input
+          type="text"
+          id="nom"
+          formControlName="nom"
+          [class.is-invalid]="isFieldInvalid('nom')"
+          placeholder="Entrez le nom de la partie adverse"
+        >
+        <div class="error-message" *ngIf="isFieldInvalid('nom')">
+          {{ getErrorMessage('nom') }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="contact">Contact *</label>
+        <input
+          type="text"
+          id="contact"
+          formControlName="contact"
+          [class.is-invalid]="isFieldInvalid('contact')"
+          placeholder="Entrez les informations de contact"
+        >
+        <div class="error-message" *ngIf="isFieldInvalid('contact')">
+          {{ getErrorMessage('contact') }}
+        </div>
+      </div>
+
+      <div class="form-group form-group-full">
+        <label for="adresee">Adresse *</label>
+        <textarea
+          id="adresee"
+          formControlName="adresee"
+          [class.is-invalid]="isFieldInvalid('adresee')"
+          placeholder="Entrez l'adresse complète"
+          rows="3"
+        ></textarea>
+        <div class="error-message" *ngIf="isFieldInvalid('adresee')">
+          {{ getErrorMessage('adresee') }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="cancel()">Annuler</button>
+      <button type="submit" class="btn-submit" [disabled]="submitting || partieAdverseForm.invalid">
+        <span *ngIf="!submitting">{{ isEditMode ? 'Enregistrer les modifications' : 'Créer la partie adverse' }}</span>
+        <span *ngIf="submitting">Traitement en cours...</span>
+      </button>
+    </div>
+  </form>
+</div>
