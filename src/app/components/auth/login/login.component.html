@@ -1,2 +1,66 @@
-<p>login works!</p>
+<!-- login.component.html -->
+<div class="login-container">
+  <div class="login-card">
+    <h2 class="login-title">Login</h2>
 
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <!-- Email Field -->
+      <div class="form-group">
+        <input
+          type="email"
+          class="form-control"
+          [class.is-invalid]="submitted && f['email'].errors"
+          formControlName="email"
+          placeholder="Email"
+        >
+        <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+          <div *ngIf="f['email'].errors['required']">Email is required</div>
+          <div *ngIf="f['email'].errors['email']">Email must be a valid email address</div>
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <input
+          type="password"
+          class="form-control"
+          [class.is-invalid]="submitted && f['password'].errors"
+          formControlName="password"
+          placeholder="Password"
+        >
+        <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+          <div *ngIf="f['password'].errors['required']">Password is required</div>
+          <div *ngIf="f['password'].errors['minlength']">Password must be at least 6 characters</div>
+        </div>
+      </div>
+
+      <!-- Remember Me -->
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          formControlName="rememberMe"
+          id="rememberMe"
+        >
+        <label class="form-check-label" for="rememberMe">
+          Remember me
+        </label>
+      </div>
+
+      <!-- Login Button -->
+      <button
+        type="submit"
+        class="btn btn-login"
+        [disabled]="loading"
+      >
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+        {{ loading ? 'Logging in...' : 'Login' }}
+      </button>
+    </form>
+
+    <!-- Forgot Password -->
+    <div class="forgot-password">
+      <a href="javascript:void(0)" (click)="onForgotPassword()">Forgot your password?</a>
+    </div>
+  </div>
+</div>

@@ -24,8 +24,12 @@ import { PartieAdverseFormComponent } from './components/reference-data/partie-a
 // Import Stade Litige components
 import { StadeLitigeListComponent } from './components/reference-data/stade-litige-list/stade-litige-list.component';
 import { StadeLitigeFormComponent } from './components/reference-data/stade-litige-form/stade-litige-form.component';
+import {LoginComponent} from './components/auth/login/login.component';
+import {RegisterComponent} from './components/auth/register/register.component';
 
 export const routes: Routes = [
+  {path:"login",component:LoginComponent},
+  {path:"register",component:RegisterComponent},
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
 

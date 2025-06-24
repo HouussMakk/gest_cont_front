@@ -146,4 +146,6 @@ export class DashboardComponent implements OnInit {
   retry(): void {
     this.loadAllData();
   }
+
+
 }

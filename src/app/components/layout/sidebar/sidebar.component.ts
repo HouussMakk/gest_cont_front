@@ -44,7 +44,6 @@ export class SidebarComponent {
   }
 
   hasSubmenu(item: MenuItem): boolean {
-    console.log(item)
-    return !!(item.submenu && item.submenu.length > 0);
+     return !!(item.submenu && item.submenu.length > 0);
   }
 }

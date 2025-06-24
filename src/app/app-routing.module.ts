@@ -29,6 +29,7 @@ const routes: Routes = [
 })
 export class AppRoutingModule { }
 const routess: Routes = [
+
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     { path: 'dashboard', component: DashboardComponent },
 
