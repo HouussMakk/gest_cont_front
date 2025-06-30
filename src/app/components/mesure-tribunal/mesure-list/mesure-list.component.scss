@@ -1,27 +1,16 @@
 // Page wrapper pour centrage
 .page-wrapper {
-  //display: flex;
   justify-content: center;
   align-items: flex-start;
   min-height: calc(100vh - 120px);
-  //padding: 20px;
-
 }
 
 .mesure-list-container {
-  //width: 100%;
-  //max-width: 800px;
   background: white;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  //overflow: hidden;
   animation: slideIn 0.4s ease-out;
-  //margin-right: 100px; animation: slideIn 0.4s ease-out;
-  //max-width: 800px; // Limite la largeur maximale
   margin: 0 auto; // Centre horizontalement
-  //padding: 20px; // Espacement autour
-  //margin-right: 100px;
-  //max-width: 800px;
 }
 
 @keyframes slideIn {
@@ -105,6 +94,7 @@
   &:hover {
     background: rgba(255, 255, 255, 0.3);
     transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -151,6 +141,7 @@
       &:focus {
         outline: none;
         border-color: #0277bd;
+        box-shadow: 0 0 0 3px rgba(2, 119, 189, 0.1);
       }
     }
   }
@@ -204,6 +195,10 @@
     padding: 6px 12px;
     border-radius: 4px;
     cursor: pointer;
+
+    &:hover {
+      background: #015f96;
+    }
   }
 }
 
@@ -212,7 +207,7 @@
   padding: 0 30px 30px;
 }
 
-.mesures-table {
+table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
@@ -236,13 +231,14 @@
   }
 
   tbody {
-    .table-row {
+    tr {
       transition: all 0.2s ease;
       border-bottom: 1px solid #f0f0f0;
 
       &:hover {
         background: #f8f9fa;
         transform: translateX(4px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
       }
 
       td {
@@ -252,30 +248,33 @@
     }
   }
 }
-// Cellules spécifiques
-.reference-cell {
-  .reference-badge {
-    background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
-    color: #0277bd;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 12px;
-  }
+
+// Badges et statuts
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
 }
 
-.type-cell {
-  .type-name {
-    font-weight: 600;
-    color: #333;
-  }
+.status-en-cours {
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+  color: #0277bd;
+  border: 1px solid #2196f3;
 }
 
-.date-cell {
-  .date-value {
-    color: #666;
-    font-weight: 500;
-  }
+.status-clos {
+  background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+  color: #2e7d32;
+  border: 1px solid #4caf50;
+}
+
+.status-en-attente {
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+  color: #f57c00;
+  border: 1px solid #ff9800;
 }
 
 // Actions
@@ -304,17 +303,26 @@
 
 .btn-view {
   color: #0277bd;
-  &:hover { background: rgba(2, 119, 189, 0.1); }
+  &:hover {
+    background: rgba(2, 119, 189, 0.1);
+    color: #015f96;
+  }
 }
 
 .btn-edit {
   color: #ff9800;
-  &:hover { background: rgba(255, 152, 0, 0.1); }
+  &:hover {
+    background: rgba(255, 152, 0, 0.1);
+    color: #f57c00;
+  }
 }
 
 .btn-delete {
   color: #f44336;
-  &:hover { background: rgba(244, 67, 54, 0.1); }
+  &:hover {
+    background: rgba(244, 67, 54, 0.1);
+    color: #d32f2f;
+  }
 }
 
 // État vide
@@ -326,7 +334,7 @@
     width: 80px;
     height: 80px;
     margin: 0 auto 20px;
-    background: #f0f0f0;
+    background: linear-gradient(135deg, #f0f0f0, #e8e8e8);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -334,18 +342,32 @@
 
     i {
       font-size: 32px;
-      color: #ccc;
+      color: #bbb;
     }
   }
 
   h3 {
     margin: 0 0 10px 0;
     color: #666;
+    font-size: 20px;
   }
 
   p {
     color: #999;
     margin-bottom: 25px;
+    font-size: 14px;
+  }
+
+  .btn-primary {
+    background: #0277bd;
+    border-color: #0277bd;
+    color: white;
+    padding: 12px 24px;
+
+    &:hover {
+      background: #015f96;
+      transform: translateY(-2px);
+    }
   }
 }
 
@@ -358,7 +380,7 @@
   padding-top: 20px;
   border-top: 1px solid #e9ecef;
 
-  .page-btn {
+  .page-item {
     width: 36px;
     height: 36px;
     border: 1px solid #ddd;
@@ -370,19 +392,23 @@
     justify-content: center;
     transition: all 0.2s ease;
     font-weight: 500;
+    font-size: 14px;
 
-    &:hover:not(:disabled) {
+    &:hover:not(.disabled) {
       background: #f8f9fa;
       border-color: #0277bd;
+      color: #0277bd;
+      transform: translateY(-1px);
     }
 
     &.active {
       background: #0277bd;
       border-color: #0277bd;
       color: white;
+      box-shadow: 0 2px 8px rgba(2, 119, 189, 0.3);
     }
 
-    &:disabled {
+    &.disabled {
       opacity: 0.5;
       cursor: not-allowed;
     }
@@ -395,18 +421,31 @@
     padding: 10px;
   }
 
+  .dossier-list-container {
+    border-radius: 8px;
+  }
+
   .actions-bar {
     flex-direction: column;
     gap: 20px;
     text-align: center;
+    padding: 20px;
 
     .header-content {
       justify-content: center;
     }
+
+    .action-buttons {
+      justify-content: center;
+    }
   }
 
-  .filter-section .filter-grid {
-    grid-template-columns: 1fr;
+  .filter-section {
+    padding: 20px;
+
+    .filter-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   .table-container {
@@ -414,7 +453,25 @@
     overflow-x: auto;
   }
 
-  .mesures-table {
-    min-width: 600px;
+  table {
+    min-width: 900px;
+  }
+}
+
+@media (max-width: 576px) {
+  .page-wrapper {
+    padding: 5px;
+  }
+
+  .actions-bar {
+    padding: 15px;
+  }
+
+  .filter-section {
+    padding: 15px;
+  }
+
+  .table-container {
+    padding: 0 10px 10px;
   }
 }

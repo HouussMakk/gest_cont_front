@@ -5,8 +5,7 @@
     <div class="dashboard-header">
       <div class="header-content">
         <div class="header-icon">
-          <i class="bi bi-speedometer2"></i>
-        </div>
+          <i class="material-icons btn-icon">dashboard</i>        </div>
         <div class="header-text">
           <h1 class="dashboard-title">Tableau de Bord</h1>
           <p class="dashboard-subtitle">Vue d'ensemble de votre système de gestion contentieux</p>
@@ -40,7 +39,7 @@
       <div class="stats-grid">
         <div class="stat-card primary">
           <div class="stat-icon">
-            <i class="bi bi-file-earmark-text"></i>
+            <i class="material-icons btn-icon">work</i>
           </div>
           <div class="stat-content">
             <div class="stat-number">{{ stats.totalDossiers }}</div>
@@ -51,7 +50,7 @@
 
         <div class="stat-card success">
           <div class="stat-icon">
-            <i class="bi bi-hammer"></i>
+            <i class="material-icons btn-icon">gavel</i>
           </div>
           <div class="stat-content">
             <div class="stat-number">{{ stats.totalMesures }}</div>
@@ -60,30 +59,29 @@
           </div>
         </div>
 
-        <div class="stat-card warning">
-          <div class="stat-icon">
-            <i class="bi bi-file-arrow-up"></i>
-          </div>
-          <div class="stat-content">
-            <div class="stat-number">{{ stats.totalDocuments }}</div>
-            <div class="stat-label">Documents</div>
-            <a routerLink="/documents" class="stat-link">Voir tous</a>
-          </div>
-        </div>
+         <div class="stat-card warning">
+           <div class="stat-icon">
+             <i class="material-icons btn-icon">anchor</i>           </div>
+           <div class="stat-content">
+             <div class="stat-number">{{ stats.totalPorts }}</div>
+             <div class="stat-label">Ports</div>
+             <a routerLink="/port" class="stat-link">Voir tous</a>
+           </div>
+         </div>
 
-        <div class="stat-card info">
-          <div class="stat-icon">
-            <i class="bi bi-people"></i>
-          </div>
-          <div class="stat-content">
-            <div class="stat-number">{{ stats.totalAvocats }}</div>
-            <div class="stat-label">Avocats</div>
-            <a routerLink="/avocats" class="stat-link">Voir tous</a>
-          </div>
-        </div>
-      </div>
+         <div class="stat-card info">
+           <div class="stat-icon">
+             <i class="material-icons btn-icon">person</i>
+           </div>
+           <div class="stat-content">
+             <div class="stat-number">{{ stats.totalAvocats }}</div>
+             <div class="stat-label">Avocats</div>
+             <a routerLink="/avocats" class="stat-link">Voir tous</a>
+           </div>
+         </div>
+       </div>
 
-      <!-- Sections de Données -->
+       <!-- Sections de Données -->
       <div class="data-sections">
 
         <!-- Dossiers Récents -->
@@ -101,7 +99,7 @@
             <div *ngIf="recentDossiers.length > 0" class="items-list">
               <div *ngFor="let dossier of recentDossiers" class="item-card dossier">
                 <div class="item-icon">
-                  <i class="bi bi-file-earmark"></i>
+                  <i class="material-icons btn-icon">work</i>
                 </div>
                 <div class="item-content">
                   <div class="item-title">{{ dossier.referenceDossier }}</div>
@@ -109,8 +107,8 @@
                   <div class="item-meta">{{ dossier.instanceJudiciaire }}</div>
                 </div>
                 <div class="item-actions">
-                  <a [routerLink]="['/dossiers', dossier.referenceDossier]" class="btn-view">
-                    <i class="bi bi-eye"></i>
+                  <a routerLink="/dossiers" class="btn-view">
+                    <i class="material-icons btn-icon">visibility</i>
                   </a>
                 </div>
               </div>
@@ -133,7 +131,7 @@
             <div *ngIf="recentMesures.length > 0" class="items-list">
               <div *ngFor="let mesure of recentMesures" class="item-card mesure">
                 <div class="item-icon">
-                  <i class="bi bi-gavel"></i>
+                  <i class="material-icons btn-icon">gavel</i>
                 </div>
                 <div class="item-content">
                   <div class="item-title">{{ mesure.typeMesure }}</div>
@@ -141,8 +139,8 @@
                   <div class="item-meta">{{ formatDate(mesure.dateMesure) }}</div>
                 </div>
                 <div class="item-actions">
-                  <a [routerLink]="['/mesures', mesure.idMesure]" class="btn-view">
-                    <i class="bi bi-eye"></i>
+                  <a routerLink="/mesures"  class="btn-view">
+                    <i class="material-icons btn-icon">visibility</i>
                   </a>
                 </div>
               </div>
@@ -150,7 +148,7 @@
           </div>
         </div>
 
-        <!-- Documents Récents -->
+        <!-- Documents Récents
         <div class="data-section">
           <div class="section-header">
             <h3><i class="bi bi-file-arrow-up"></i> Documents Récents</h3>
@@ -180,7 +178,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div>-->
 
         <!-- Données de Référence -->
         <div class="reference-data-grid">

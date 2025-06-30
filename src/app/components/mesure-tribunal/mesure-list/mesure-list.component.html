@@ -4,7 +4,7 @@
     <div class="actions-bar">
       <div class="header-content">
         <div class="header-icon">
-          <i class="bi bi-hammer"></i>
+          <i class="material-icons btn-icon">gavel</i>
         </div>
         <div class="header-text">
           <h2 class="list-title">Mesures Tribunal</h2>
@@ -13,11 +13,11 @@
       </div>
       <div class="action-buttons">
         <button class="btn-outline" (click)="filterActive = !filterActive">
-          <i class="bi bi-filter"></i>
+          <i class="material-icons btn-icon">filter_list</i>
           Filtrer
         </button>
         <a routerLink="/mesures/new" class="btn-primary">
-          <i class="bi bi-plus-lg"></i>
+          <i class="material-icons btn-icon">add</i>
           Nouvelle Mesure
         </a>
       </div>
@@ -94,17 +94,17 @@
               <a [routerLink]="['/mesures', mesure.idMesure]"
                  class="btn-action btn-view"
                  title="Voir les détails">
-                <i class="bi bi-eye"></i>
+                <i class="material-icons">visibility</i>
               </a>
               <a [routerLink]="['/mesures', mesure.idMesure, 'edit']"
                  class="btn-action btn-edit"
                  title="Modifier">
-                <i class="bi bi-pencil"></i>
+                <i class="material-icons">edit</i>
               </a>
               <button class="btn-action btn-delete"
                       (click)="openDeleteDialog(mesure)"
                       title="Supprimer">
-                <i class="bi bi-trash"></i>
+                <i class="material-icons">delete</i>
               </button>
             </div>
           </td>

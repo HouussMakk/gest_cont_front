@@ -1,0 +1,509 @@
+// Variables
+$primary-blue: #0277bd;
+$light-blue: #4fc3f7;
+$dark-blue: #01579b;
+$white: #ffffff;
+$light-gray: #f8fafb;
+$medium-gray: #e1e5e9;
+$text-gray: #6c757d;
+$text-dark: #2c3e50;
+$error-red: #e74c3c;
+$success-green: #27ae60;
+
+// Page container
+.login-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, $primary-blue 0%, $light-blue 50%, $dark-blue 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+
+  // Animated background elements
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background:
+      radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    animation: float 20s ease-in-out infinite;
+    z-index: 1;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    animation: drift 30s linear infinite;
+    z-index: 1;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(30px, -30px) rotate(120deg); }
+  66% { transform: translate(-20px, 20px) rotate(240deg); }
+}
+
+@keyframes drift {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100px); }
+}
+
+// Card container
+.login-card {
+  background: $white;
+  border-radius: 24px;
+  padding: 50px 40px;
+  box-shadow:
+    0 25px 50px rgba(2, 119, 189, 0.3),
+    0 10px 30px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  z-index: 2;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: slideUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  // Glassmorphism effect
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    border-radius: 24px;
+    z-index: -1;
+  }
+
+  // Floating glow effect
+  &::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, $primary-blue, $light-blue, $primary-blue);
+    border-radius: 26px;
+    z-index: -2;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover::after {
+    opacity: 0.7;
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(60px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes glow {
+  0% { filter: blur(5px); }
+  100% { filter: blur(10px); }
+}
+
+// Title
+.login-title {
+  text-align: center;
+  color: $primary-blue;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 40px;
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, $primary-blue, $light-blue, $primary-blue);
+    border-radius: 2px;
+    animation: shimmer 2s ease-in-out infinite;
+  }
+
+  &::after {
+    content: '🏛️';
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 30px;
+    animation: bounce 2s ease-in-out infinite;
+  }
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+  40% { transform: translateX(-50%) translateY(-10px); }
+  60% { transform: translateX(-50%) translateY(-5px); }
+}
+
+// Form groups
+.form-group {
+  margin-bottom: 25px;
+  position: relative;
+}
+
+// Form controls
+.form-control {
+  width: 100%;
+  padding: 18px 24px;
+  border: 2px solid $medium-gray;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 500;
+  background: $light-gray;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 1;
+
+  &::placeholder {
+    color: $text-gray;
+    font-weight: 400;
+    transition: all 0.3s ease;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $primary-blue;
+    background: $white;
+    box-shadow:
+      0 0 0 4px rgba(2, 119, 189, 0.1),
+      0 8px 25px rgba(2, 119, 189, 0.15);
+    transform: translateY(-2px);
+
+    &::placeholder {
+      color: transparent;
+      transform: translateY(-20px);
+    }
+  }
+
+  &:valid:not(:placeholder-shown) {
+    border-color: $success-green;
+    background: rgba($success-green, 0.05);
+  }
+
+  &.is-invalid {
+    border-color: $error-red;
+    background: rgba($error-red, 0.05);
+    animation: shake 0.6s ease-in-out;
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+// Floating labels effect
+.form-group {
+  &::before {
+    content: attr(data-label);
+    position: absolute;
+    top: 20px;
+    left: 24px;
+    color: $text-gray;
+    font-size: 16px;
+    font-weight: 500;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2;
+  }
+
+  &.focused::before,
+  &.filled::before {
+    top: -8px;
+    left: 16px;
+    font-size: 12px;
+    color: $primary-blue;
+    background: $white;
+    padding: 0 8px;
+    border-radius: 4px;
+  }
+}
+
+// Error messages
+.invalid-feedback {
+  display: block;
+  color: $error-red;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 8px;
+  padding-left: 24px;
+  animation: slideDown 0.3s ease-out;
+
+  &::before {
+    content: '⚠️';
+    margin-right: 6px;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Checkbox
+.form-check {
+  margin: 30px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.form-check-input {
+  width: 20px;
+  height: 20px;
+  border: 2px solid $primary-blue;
+  border-radius: 6px;
+  background: $white;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+
+  &:checked {
+    background: $primary-blue;
+    border-color: $primary-blue;
+    animation: checkmark 0.4s ease-in-out;
+
+    &::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: $white;
+      font-size: 14px;
+      font-weight: bold;
+    }
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(2, 119, 189, 0.2);
+  }
+}
+
+@keyframes checkmark {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.form-check-label {
+  color: $text-dark;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: $primary-blue;
+  }
+}
+
+// Login button
+.btn-login {
+  width: 100%;
+  padding: 18px 24px;
+  background: linear-gradient(135deg, $primary-blue 0%, $light-blue 50%, $primary-blue 100%);
+  background-size: 200% 200%;
+  border: none;
+  border-radius: 16px;
+  color: $white;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  margin: 30px 0;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+  }
+
+  &:hover {
+    background-position: 100% 100%;
+    transform: translateY(-3px);
+    box-shadow:
+      0 12px 30px rgba(2, 119, 189, 0.4),
+      0 6px 20px rgba(0, 0, 0, 0.1);
+
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:active {
+    transform: translateY(-1px);
+    box-shadow:
+      0 6px 15px rgba(2, 119, 189, 0.3),
+      0 3px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+
+    &:hover::before {
+      left: -100%;
+    }
+  }
+}
+
+// Spinner
+.spinner-border {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid $white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.spinner-border-sm {
+  width: 16px;
+  height: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Forgot password
+.forgot-password {
+  text-align: center;
+  margin-top: 25px;
+
+  a {
+    color: $primary-blue;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, $primary-blue, $light-blue);
+      transition: width 0.3s ease;
+    }
+
+    &:hover {
+      color: $dark-blue;
+      transform: translateY(-1px);
+
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .login-container {
+    padding: 15px;
+  }
+
+  .login-card {
+    padding: 40px 30px;
+    border-radius: 20px;
+    max-width: 100%;
+  }
+
+  .login-title {
+    font-size: 28px;
+    margin-bottom: 30px;
+
+    &::after {
+      font-size: 24px;
+      top: -35px;
+    }
+  }
+
+  .form-control {
+    padding: 16px 20px;
+    font-size: 14px;
+  }
+
+  .btn-login {
+    padding: 16px 20px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 30px 20px;
+    border-radius: 16px;
+  }
+
+  .login-title {
+    font-size: 24px;
+  }
+
+  .form-control {
+    padding: 14px 18px;
+  }
+}

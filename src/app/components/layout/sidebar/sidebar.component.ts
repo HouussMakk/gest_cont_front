@@ -25,7 +25,7 @@ export class SidebarComponent {
     { title: 'Dashboard', icon: 'bi bi-house', route: '/dashboard' },
     { title: 'Dossier Juridique', icon: 'bi bi-file-earmark-fill', route: '/dossiers' },
     { title: 'Mesure Tribunal', icon: 'bi bi-archive-fill', route: '/mesures' },
-    { title: 'Documents', icon: 'bi bi-file-arrow-up-fill', route: '/documents' },
+    //{ title: 'Documents', icon: 'bi bi-file-arrow-up-fill', route: '/documents' },
     {
       title: 'Données de Référence',
       icon: 'bi bi-folder',
