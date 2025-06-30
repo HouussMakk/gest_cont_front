@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import {AuthService} from '../../../services/auth.service';
 
 interface MenuItem {
   title: string;
@@ -18,6 +19,8 @@ interface MenuItem {
   imports: [CommonModule, RouterModule]
 })
 export class SidebarComponent {
+  constructor(private authService:AuthService) {
+  }
   menuItems: MenuItem[] = [
     { title: 'Dashboard', icon: 'bi bi-house', route: '/dashboard' },
     { title: 'Dossier Juridique', icon: 'bi bi-file-earmark-fill', route: '/dossiers' },
@@ -45,5 +48,10 @@ export class SidebarComponent {
 
   hasSubmenu(item: MenuItem): boolean {
      return !!(item.submenu && item.submenu.length > 0);
+  }
+  logout(): void {
+    if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+      this.authService.logout();
+    }
   }
 }

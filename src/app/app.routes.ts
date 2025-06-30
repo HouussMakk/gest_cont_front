@@ -26,29 +26,30 @@ import { StadeLitigeListComponent } from './components/reference-data/stade-liti
 import { StadeLitigeFormComponent } from './components/reference-data/stade-litige-form/stade-litige-form.component';
 import {LoginComponent} from './components/auth/login/login.component';
 import {RegisterComponent} from './components/auth/register/register.component';
+import {AuthGuard} from './guards/guards.guard';
 
 export const routes: Routes = [
   {path:"login",component:LoginComponent},
   {path:"register",component:RegisterComponent},
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent , canActivate:[AuthGuard] },
 
   // Routes pour dossiers juridiques
-  { path: 'dossiers', component: DossierListComponent },
-  { path: 'dossiers/new', component: DossierFormComponent },
-  //{ path: 'dossiers/:id', component: DossierDetailComponent },
-  { path: 'dossiers/:id/edit', component: DossierFormComponent },
+  { path: 'dossiers', component: DossierListComponent, canActivate:[AuthGuard] },
+  { path: 'dossiers/new', component: DossierFormComponent , canActivate:[AuthGuard]},
+  //{ path: 'dossiers/:id', component: DossierDetailComponent, canActivate:[AuthGuard] },
+  { path: 'dossiers/:id/edit', component: DossierFormComponent, canActivate:[AuthGuard] },
 
   // Routes pour mesures tribunal
-  { path: 'mesures', component: MesureListComponent },
-  { path: 'mesures/new', component: MesureFormComponent },
-  { path: 'mesures/:id', component: MesureDetailComponent },
-  { path: 'mesures/:id/edit', component: MesureFormComponent },
+  { path: 'mesures', component: MesureListComponent, canActivate:[AuthGuard] },
+  { path: 'mesures/new', component: MesureFormComponent , canActivate:[AuthGuard]},
+  { path: 'mesures/:id', component: MesureDetailComponent , canActivate:[AuthGuard]},
+  { path: 'mesures/:id/edit', component: MesureFormComponent, canActivate:[AuthGuard] },
 
   // Routes pour documents
-  { path: 'documents', component: DocumentListComponent },
-  { path: 'documents/upload', component: DocumentUploadComponent },
-  { path: 'documents/:id', component: DocumentDetailComponent },
+  { path: 'documents', component: DocumentListComponent , canActivate:[AuthGuard]},
+  { path: 'documents/upload', component: DocumentUploadComponent , canActivate:[AuthGuard]},
+  { path: 'documents/:id', component: DocumentDetailComponent , canActivate:[AuthGuard]},
 
 
 

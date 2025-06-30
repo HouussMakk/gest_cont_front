@@ -1,7 +1,7 @@
 // login.component.ts
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import { Router } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {AuthService} from '../../../services/auth.service';
 import {NgIf} from '@angular/common';
 
@@ -10,7 +10,8 @@ import {NgIf} from '@angular/common';
   templateUrl: './login.component.html',
   imports: [
     ReactiveFormsModule,
-    NgIf
+    NgIf,
+    RouterLink
   ],
   styleUrls: ['./login.component.css']
 })

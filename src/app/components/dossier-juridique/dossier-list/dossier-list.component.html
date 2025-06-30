@@ -20,30 +20,18 @@
     </div>
     <div class="form-group">
       <label for="filterNature">Nature du Litige</label>
-      <select id="filterNature" class="form-control" [(ngModel)]="filters.natureLitige">
-        <option value="">Tous</option>
-        <option value="Commercial">Commercial</option>
-        <option value="Maritime">Maritime</option>
-        <option value="Administratif">Administratif</option>
-      </select>
+      <input type="text" id="filterNature" class="form-control" [(ngModel)]="filters.natureLitige">
+
     </div>
     <div class="form-group">
       <label for="filterInstance">Instance Judiciaire</label>
-      <select id="filterInstance" class="form-control" [(ngModel)]="filters.instanceJudiciaire">
-        <option value="">Toutes</option>
-        <option value="Tribunal de Commerce">Tribunal de Commerce</option>
-        <option value="Tribunal Maritime">Tribunal Maritime</option>
-        <option value="Tribunal Administratif">Tribunal Administratif</option>
-      </select>
+      <input type="text" id="filterInstance" class="form-control" [(ngModel)]="filters.instanceJudiciaire">
+
     </div>
     <div class="form-group">
       <label for="filterStade">Stade Litige</label>
-      <select id="filterStade" class="form-control" [(ngModel)]="filters.stadeLitige">
-        <option value="">Tous</option>
-        <option value="En cours">En cours</option>
-        <option value="Clos">Clos</option>
-        <option value="En attente">En attente</option>
-      </select>
+      <input type="text" id="filterStade" class="form-control" [(ngModel)]="filters.stadeLitige">
+
     </div>
   </div>
 

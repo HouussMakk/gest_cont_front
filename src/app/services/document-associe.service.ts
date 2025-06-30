@@ -9,7 +9,7 @@ import { DocumentAssocie } from '../models/document-associe.model';
 })
 export class DocumentAssocieService {
   private apiUrl = `${environment.apiUrl}/documents`;
-  headers = { 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUB1c2VyLmNvbSIsImlhdCI6MTc0OTU4NDQyMiwiZXhwIjoxNzUwMTg5MjIyfQ.ispHZeXR3ELcray52Km_-NkHntz2VDDvpsDUQdS5fiQ' }
+  headers = { 'Authorization': `Bearer ${window.localStorage.getItem("jwt")}` }
 
   constructor(private http: HttpClient) { }
 

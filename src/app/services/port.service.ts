@@ -10,9 +10,8 @@ import { Port } from '../models/port.model';
 export class PortService {
   private apiUrl = `${environment.apiUrl}/ports`;
 
-  private headers = new HttpHeaders({
-    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUB1c2VyLmNvbSIsImlhdCI6MTc0OTU4NDQyMiwiZXhwIjoxNzUwMTg5MjIyfQ.ispHZeXR3ELcray52Km_-NkHntz2VDDvpsDUQdS5fiQ'
-  });
+  headers = { 'Authorization': `Bearer ${window.localStorage.getItem("jwt")}` }
+
 
   private options = { headers: this.headers };
 

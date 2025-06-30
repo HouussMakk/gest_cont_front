@@ -9,7 +9,7 @@ import {DossierJuridique, DossierJuridiqueListing} from '../models/dossier-jurid
 })
 export class DossierJuridiqueService {
   private apiUrl = `${environment.apiUrl}/dossiers`;
-  headers = { 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUB1c2VyLmNvbSIsImlhdCI6MTc0OTU4NDQyMiwiZXhwIjoxNzUwMTg5MjIyfQ.ispHZeXR3ELcray52Km_-NkHntz2VDDvpsDUQdS5fiQ' }
+  headers = { 'Authorization': `Bearer ${window.localStorage.getItem("jwt")}` }
 
   constructor(private http: HttpClient) { }
 

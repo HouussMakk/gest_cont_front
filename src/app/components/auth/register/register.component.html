@@ -1,1 +1,69 @@
-<p>register works!</p>
+<!-- register.component.html -->
+<div class="register-container">
+  <div class="register-card">
+    <h2 class="register-title">Create Account</h2>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <!-- fullName Field -->
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          [class.is-invalid]="submitted && f['fullName'].errors"
+          formControlName="fullName"
+          placeholder="FullName"
+        >
+        <div *ngIf="submitted && f['fullName'].errors" class="invalid-feedback">
+          <div *ngIf="f['fullName'].errors['required']">fullName is required</div>
+          <div *ngIf="f['fullName'].errors['minlength']">fullName must be at least 3 characters</div>
+        </div>
+      </div>
+
+      <!-- Email Field -->
+      <div class="form-group">
+        <input
+          type="email"
+          class="form-control"
+          [class.is-invalid]="submitted && f['email'].errors"
+          formControlName="email"
+          placeholder="Email"
+        >
+        <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+          <div *ngIf="f['email'].errors['required']">Email is required</div>
+          <div *ngIf="f['email'].errors['email']">Email must be a valid email address</div>
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <input
+          type="password"
+          class="form-control"
+          [class.is-invalid]="submitted && f['password'].errors"
+          formControlName="password"
+          placeholder="Password"
+        >
+        <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+          <div *ngIf="f['password'].errors['required']">Password is required</div>
+          <div *ngIf="f['password'].errors['minlength']">Password must be at least 6 characters</div>
+        </div>
+      </div>
+
+      <!-- Register Button -->
+      <button
+        type="submit"
+        class="btn btn-register"
+        [disabled]="loading"
+      >
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+        {{ loading ? 'Creating Account...' : 'Create Account' }}
+      </button>
+    </form>
+
+    <!-- Login Link -->
+    <div class="login-link">
+
+      <a [routerLink]="['/login']" >Login</a>
+    </div>
+  </div>
+</div>

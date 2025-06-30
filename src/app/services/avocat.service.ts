@@ -9,11 +9,12 @@ import { Avocat } from '../models/avocat.model';
 })
 export class AvocatService {
   private apiUrl = `${environment.apiUrl}/avocats`;
-  headers = { 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUB1c2VyLmNvbSIsImlhdCI6MTc0OTU4NDQyMiwiZXhwIjoxNzUwMTg5MjIyfQ.ispHZeXR3ELcray52Km_-NkHntz2VDDvpsDUQdS5fiQ' }
+  headers = { 'Authorization': `Bearer ${window.localStorage.getItem("jwt")}` }
 
   constructor(private http: HttpClient) { }
 
   getAllAvocats(): Observable<Avocat[]> {
+
     return this.http.get<Avocat[]>(this.apiUrl,{headers:this.headers});
   }
 

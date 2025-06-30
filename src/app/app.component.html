@@ -1,17 +1,19 @@
-
-  <div class="row">
+<div class="app-container" *ngIf="isAuthenticated">
   <div class="col-md-2">
     <app-sidebar></app-sidebar>
   </div>
-    <div class="col-md-10">
-      <div class="main-content">
-        <app-header></app-header>
-        <div class="page-content">
-          <!-- Ici s'affichera le contenu dynamique (router-outlet) -->
-          <router-outlet></router-outlet>
-        </div>
+  <div class="col-md-10">
+    <div class="main-content">
+      <app-header></app-header>
+      <div class="page-content">
+        <!-- Ici s'affichera le contenu dynamique (router-outlet) -->
+        <router-outlet></router-outlet>
       </div>
     </div>
   </div>
+</div>
 
-
+<!-- Show only router-outlet for login page when not authenticated -->
+<div *ngIf="!isAuthenticated">
+  <router-outlet></router-outlet>
+</div>

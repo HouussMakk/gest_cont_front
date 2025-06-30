@@ -37,22 +37,11 @@
         </div>
         <div class="form-group">
           <label for="filterType">Type de mesure</label>
-          <select id="filterType"
+          <input type="text" id="filterType"
                   class="form-control"
                   [(ngModel)]="filters.typeMesure"
                   (ngModelChange)="applyFilters()">
-            <option value="">Tous les types</option>
-            <option value="Saisie conservatoire">Saisie conservatoire</option>
-            <option value="Référé provision">Référé provision</option>
-            <option value="Expertise judiciaire">Expertise judiciaire</option>
-            <option value="Ordonnance de référé">Ordonnance de référé</option>
-            <option value="Jugement">Jugement</option>
-            <option value="Arrêt de la Cour">Arrêt de la Cour</option>
-            <option value="Ordonnance de mise en demeure">Ordonnance de mise en demeure</option>
-            <option value="Mesure d'instruction">Mesure d'instruction</option>
-            <option value="Assignation en justice">Assignation en justice</option>
-            <option value="Autre">Autre</option>
-          </select>
+
         </div>
         <div class="form-group">
           <label for="filterDate">Date</label>
